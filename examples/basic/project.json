@@ -1,0 +1,16 @@
+{
+  "name": "example-basic",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "examples/basic",
+  "tags": ["type:example"],
+  "targets": {
+    "run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx examples/basic/run.ts",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  }
+}

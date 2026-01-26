@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "composite": true,
+    "baseUrl": ".",
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "importHelpers": true,
@@ -16,6 +16,17 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["@org/source"]
+    "customConditions": ["@org/source"],
+    "paths": {
+      "@graphjson/json-dsl": ["libs/json-dsl/src/index.ts"],
+      "@graphjson/ast": ["libs/ast/src/index.ts"],
+      "@graphjson/printer": ["libs/printer/src/index.ts"],
+      "@graphjson/shared": ["libs/shared/src/index.ts"],
+      "@graphjson/core": ["libs/core/src/index.ts"],
+      "@graphjson/schema": ["libs/schema/src/index.ts"],
+      "@graphjson/plugins": ["libs/plugins/src/index.ts"],
+      "@graphjson/presets": ["libs/presets/src/index.ts"],
+      "@graphjson/sdk": ["libs/sdk/src/index.ts"]
+    }
   }
 }

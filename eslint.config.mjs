@@ -22,8 +22,13 @@ export default [
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
           depConstraints: [
             {
-              sourceTag: 'scope:shared',
-              onlyDependOnLibsWithTags: ['scope:shared'],
+              sourceTag: 'scope:core',
+              onlyDependOnLibsWithTags: [
+                'scope:ast',
+                'scope:json-dsl',
+                'scope:shared',
+                'scope:plugins',
+              ],
             },
             {
               sourceTag: 'scope:async',
@@ -36,6 +41,42 @@ export default [
             {
               sourceTag: 'scope:strings',
               onlyDependOnLibsWithTags: ['scope:shared', 'scope:strings'],
+            },
+            {
+              sourceTag: 'scope:json-dsl',
+              onlyDependOnLibsWithTags: ['scope:json-dsl'],
+            },
+            {
+              sourceTag: 'scope:ast',
+              onlyDependOnLibsWithTags: ['scope:json-dsl'],
+            },
+            {
+              sourceTag: 'scope:printer',
+              onlyDependOnLibsWithTags: ['scope:ast'],
+            },
+            {
+              sourceTag: 'scope:presets',
+              onlyDependOnLibsWithTags: ['scope:plugins'],
+            },
+            {
+              sourceTag: 'scope:shared',
+              onlyDependOnLibsWithTags: ['scope:shared'],
+            },
+            {
+              sourceTag: 'scope:plugins',
+              onlyDependOnLibsWithTags: ['scope:plugins'],
+            },
+            {
+              sourceTag: 'scope:schema',
+              onlyDependOnLibsWithTags: ['scope:json-dsl', 'scope:shared'],
+            },
+            {
+              sourceTag: 'scope:sdk',
+              onlyDependOnLibsWithTags: ['scope:json-dsl', 'scope:core', 'scope:shared'],
+            },
+            {
+              sourceTag: 'type:example',
+              onlyDependOnLibsWithTags: ['*'],
             },
           ],
         },

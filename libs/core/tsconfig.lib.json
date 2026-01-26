@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist/out-tsc/core",
+    "declaration": true,
+    "types": ["node", "vite/client"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "jest.config.ts",
+    "jest.config.cts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ],
+  "references": [
+    {
+      "path": "../ast/tsconfig.lib.json"
+    },
+    {
+      "path": "../json-dsl/tsconfig.lib.json"
+    },
+    {
+      "path": "../plugins/tsconfig.lib.json"
+    }
+  ]
+}

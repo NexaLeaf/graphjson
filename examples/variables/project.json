@@ -1,0 +1,16 @@
+{
+  "name": "example-variables",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "examples/variables",
+  "tags": ["type:example"],
+  "targets": {
+    "run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx examples/variables/run.ts",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  }
+}

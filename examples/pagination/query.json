@@ -1,0 +1,15 @@
+{
+  "query": {
+    "users": {
+      "args": {
+        "first": 10,
+        "after": { "$var": "cursor", "type": "String" }
+      },
+      "select": {
+        "id": true,
+        "name": true,
+        "email": true
+      }
+    }
+  }
+}

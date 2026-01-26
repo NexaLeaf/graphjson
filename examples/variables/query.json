@@ -1,0 +1,13 @@
+{
+  "query": {
+    "user": {
+      "args": {
+        "id": { "$var": "userId", "type": "ID!" }
+      },
+      "select": {
+        "id": true,
+        "email": true
+      }
+    }
+  }
+}

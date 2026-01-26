@@ -1,0 +1,10 @@
+{
+  "query": {
+    "users": {
+      "select": {
+        "id": true,
+        "name": true
+      }
+    }
+  }
+}

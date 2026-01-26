@@ -4,16 +4,31 @@
   "files": [],
   "references": [
     {
-      "path": "./packages/strings"
+      "path": "./libs/json-dsl"
     },
     {
-      "path": "./packages/colors"
+      "path": "./libs/plugins"
     },
     {
-      "path": "./packages/async"
+      "path": "./libs/presets"
     },
     {
-      "path": "./packages/utils"
+      "path": "./libs/printer"
+    },
+    {
+      "path": "./libs/schema"
+    },
+    {
+      "path": "./libs/shared"
+    },
+    {
+      "path": "./libs/core"
+    },
+    {
+      "path": "./libs/ast"
+    },
+    {
+      "path": "./libs/sdk"
     }
   ]
 }

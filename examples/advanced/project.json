@@ -1,0 +1,16 @@
+{
+  "name": "example-advanced",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "examples/advanced",
+  "tags": ["type:example"],
+  "targets": {
+    "run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx examples/advanced/run.ts",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "entryPoints": [
+    "libs/core/src/index.ts",
+    "libs/sdk/src/index.ts",
+    "libs/presets/src/index.ts",
+    "libs/json-dsl/src/index.ts"
+  ],
+  "out": "docs/docs/api",
+  "plugin": ["typedoc-plugin-markdown"],
+  "excludePrivate": true
+}

@@ -6,28 +6,41 @@
   "private": true,
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "@nx/esbuild": "22.4.1",
     "@nx/eslint": "22.4.0",
     "@nx/eslint-plugin": "22.4.0",
-    "@nx/js": "22.4.0",
+    "@nx/jest": "22.4.0",
+    "@nx/js": "22.4.1",
+    "@nx/node": "^22.4.1",
     "@nx/vite": "22.4.0",
     "@nx/vitest": "22.4.0",
     "@nx/web": "22.4.0",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@types/jest": "^30.0.0",
     "@types/node": "20.19.9",
     "@vitest/coverage-v8": "4.0.9",
     "@vitest/ui": "4.0.9",
+    "esbuild": "^0.19.2",
     "eslint": "~8.57.0",
+    "jest": "^30.0.2",
+    "jest-environment-node": "^30.0.2",
+    "jest-util": "^30.0.2",
     "jiti": "2.4.2",
+    "jsdom": "^27.1.0",
     "jsonc-eslint-parser": "^2.1.0",
     "nx": "22.4.0",
-    "prettier": "^2.6.2",
+    "prettier": "~3.6.2",
+    "ts-jest": "^29.4.0",
+    "ts-node": "10.9.1",
     "tslib": "^2.3.0",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",
     "verdaccio": "^6.0.5",
     "vite": "^7.0.0",
+    "vite-plugin-dts": "~4.5.0",
     "vitest": "4.0.9"
   },
   "workspaces": [
@@ -46,5 +59,9 @@
       }
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^1.6.0",
+    "graphql": "^16.12.0",
+    "yargs": "^18.0.0"
+  }
 }

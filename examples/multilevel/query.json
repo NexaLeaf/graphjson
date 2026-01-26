@@ -1,0 +1,37 @@
+{
+  "query": {
+    "companies": {
+      "args": { "first": 5 },
+      "select": {
+        "id": true,
+        "name": true,
+        "departments": {
+          "args": { "first": 3 },
+          "select": {
+            "id": true,
+            "name": true,
+            "employees": {
+              "args": {
+                "first": 10,
+                "after": { "$var": "employeeCursor", "type": "String" }
+              },
+              "select": {
+                "id": true,
+                "firstName": true,
+                "lastName": true,
+                "projects": {
+                  "args": { "active": true },
+                  "select": {
+                    "id": true,
+                    "title": true,
+                    "status": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
