@@ -1,8 +1,8 @@
-import { visit } from 'graphql';
+import { DocumentNode, FieldNode, visit } from 'graphql';
 import { GraphJsonPlugin } from '@graphjson/plugins';
 
 export function applyPlugins(
-  document,
+  document: DocumentNode,
   plugins: GraphJsonPlugin[]
 ) {
   let doc = document;
@@ -12,13 +12,15 @@ export function applyPlugins(
       doc = plugin.onDocument(doc) ?? doc;
     }
 
-    if (plugin.onField) {
-      doc = visit(doc, {
-        Field(node) {
-          return plugin.onField(node, { path: [] }) ?? node;
-        },
-      });
-    }
+   const onField = plugin.onField;
+
+   if (onField) {
+    doc = visit(doc, {
+    Field(node: FieldNode) {
+      return onField(node, { path: [] }) ?? node;
+    },
+  });
+}
   }
 
   return doc;

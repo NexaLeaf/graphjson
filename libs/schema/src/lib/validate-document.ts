@@ -5,6 +5,8 @@ import {
   GraphQLError,
   TypeInfo,
   visitWithTypeInfo,
+  FieldNode,
+  ArgumentNode,
 } from 'graphql';
 
 export interface ValidationResult {
@@ -21,7 +23,7 @@ export function validateDocument(
   visit(
     document,
     visitWithTypeInfo(typeInfo, {
-      Field(node) {
+      Field(node: FieldNode) {
         const fieldDef = typeInfo.getFieldDef();
         if (!fieldDef) {
           errors.push(
@@ -32,7 +34,7 @@ export function validateDocument(
           );
         }
       },
-      Argument(node) {
+      Argument(node: ArgumentNode) {
         const argDef = typeInfo.getArgument();
         if (!argDef) {
           errors.push(

@@ -1,13 +1,13 @@
 import { GraphJsonPlugin } from '@graphjson/plugins';
-import { Kind } from 'graphql';
+import { FieldNode, Kind, SelectionNode } from 'graphql';
 
 export function relayPagination(): GraphJsonPlugin {
   return {
-    onField(field) {
+    onField(field: FieldNode) {
       if (!field.selectionSet) return;
 
       const hasEdges = field.selectionSet.selections.some(
-        s => s.kind === Kind.FIELD && s.name.value === 'edges'
+        (s: SelectionNode) => s.kind === Kind.FIELD && s.name.value === 'edges'
       );
 
       if (hasEdges) return;

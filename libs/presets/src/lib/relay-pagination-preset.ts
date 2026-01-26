@@ -15,7 +15,7 @@ export function relayPaginationPreset(
   relayFields: Set<FieldNode>
 ): DocumentNode {
   return visit(document, {
-    Field(node) {
+    Field(node: FieldNode) {
       if (!relayFields.has(node)) return;
 
       if (!node.selectionSet) return;

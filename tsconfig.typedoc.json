@@ -1,0 +1,31 @@
+{
+  "extends": "./tsconfig.base.json",
+
+  "compilerOptions": {
+    /* ---- Required pairing ---- */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    /* ---- Disable emit entirely ---- */
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "emitDeclarationOnly": false,
+
+    /* ---- TypeDoc safe defaults ---- */
+    "types": ["node"],
+    "skipLibCheck": true
+  },
+
+  "include": [
+    "libs/*/src/**/*.ts"
+  ],
+
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.spec.tsx",
+    "**/*.test.tsx",
+    "**/__tests__/**"
+  ]
+}

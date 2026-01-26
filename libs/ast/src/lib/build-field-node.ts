@@ -6,20 +6,22 @@ import {
 } from 'graphql';
 import { JsonField, JsonVariable } from '@graphjson/json-dsl';
 import { literalToValueNode } from './literals.js';
+import { isJsonVariable } from './is-json-variable.js';
 
 type CollectVar = (v: JsonVariable) => void;
+
 export function buildFieldNode(
   name: string,
   field: JsonField,
   collectVar: CollectVar,
-  relayFields: Set<FieldNode> // 👈 ADD THIS
+  relayFields: Set<FieldNode>
 ): FieldNode {
   const args: ArgumentNode[] = [];
   const selections: SelectionNode[] = [];
 
   if (field.args) {
     for (const [argName, value] of Object.entries(field.args)) {
-      if (typeof value === 'object' && value && '$var' in value) {
+      if (isJsonVariable(value)) {
         collectVar(value);
         args.push({
           kind: Kind.ARGUMENT,
@@ -57,7 +59,7 @@ export function buildFieldNode(
             key,
             val as JsonField,
             collectVar,
-            relayFields // 👈 PASS THROUGH
+            relayFields
           )
         );
       }
@@ -73,7 +75,6 @@ export function buildFieldNode(
       : undefined,
   };
 
-  // 🚨 THIS IS THE KEY LINE
   if (field.paginate === 'relay') {
     relayFields.add(node);
   }

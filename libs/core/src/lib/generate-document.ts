@@ -5,6 +5,7 @@ import {
   VariableDefinitionNode,
   TypeNode,
   FieldNode,
+  OperationTypeNode,
 } from 'graphql';
 import { JsonDocument, JsonVariable } from '@graphjson/json-dsl';
 import {  buildFieldNode } from '@graphjson/ast';
@@ -58,7 +59,7 @@ export function generateDocument(json: JsonDocument, options?: { applyRelay?: bo
   ): OperationDefinitionNode {
     return {
       kind: Kind.OPERATION_DEFINITION,
-      operation: type,
+      operation: type as OperationTypeNode,
       variableDefinitions: Array.from(variableDefinitions.values()),
       selectionSet: {
         kind: Kind.SELECTION_SET,
