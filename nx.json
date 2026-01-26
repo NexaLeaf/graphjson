@@ -64,9 +64,16 @@
     }
   ],
   "release": {
-    "projects": ["*", "!utils", "!@org/source"],
+    "projects": ["libs/*", "!utils", "!@org/source"],
     "version": {
-      "preVersionCommand": "npx nx run-many -t build"
+      "preVersionCommand": "npx nx run-many -t build",
+      "generatorOptions": {
+        "packageRoot": "{projectRoot}",
+        "currentVersionResolver": "disk"
+      }
+    },
+    "changelog": {
+      "projectChangelogs": true
     }
   },
   "targetDefaults": {

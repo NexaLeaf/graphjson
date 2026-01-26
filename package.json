@@ -1,9 +1,9 @@
 {
-  "name": "@org/source",
+  "name": "@nexaleaf/graphjson",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {},
-  "private": true,
+  "private": false,
   "devDependencies": {
     "@eslint/js": "^9.8.0",
     "@nx/esbuild": "22.4.1",
