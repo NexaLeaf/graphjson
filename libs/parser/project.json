@@ -1,0 +1,9 @@
+{
+  "name": "parser",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "parser/src",
+  "projectType": "library",
+  "tags": ["scope:ast"],
+  "// targets": "to see all targets run: nx show project parser --web",
+  "targets": {}
+}

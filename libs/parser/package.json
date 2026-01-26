@@ -1,0 +1,43 @@
+{
+  "name": "@graphjson/parser",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Complete GraphJSON parser - convenient wrapper that includes all GraphJSON libraries",
+  "keywords": ["graphql", "json", "query", "parser", "graphjson", "ast", "schema", "sdk"],
+  "author": "GraphJSON",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NexaLeaf/graphjson.git",
+    "directory": "libs/parser"
+  },
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "**/*.js",
+    "**/*.d.ts",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@graphjson/ast": "0.0.1",
+    "@graphjson/core": "0.0.1",
+    "@graphjson/json-dsl": "0.0.1",
+    "@graphjson/plugins": "0.0.1",
+    "@graphjson/presets": "0.0.1",
+    "@graphjson/printer": "0.0.1",
+    "@graphjson/schema": "0.0.1",
+    "@graphjson/sdk": "0.0.1",
+    "@graphjson/shared": "0.0.1"
+  }
+}

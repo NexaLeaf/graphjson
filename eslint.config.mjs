@@ -72,7 +72,11 @@ export default [
             },
             {
               sourceTag: 'scope:sdk',
-              onlyDependOnLibsWithTags: ['scope:json-dsl', 'scope:core', 'scope:shared'],
+              onlyDependOnLibsWithTags: [
+                'scope:json-dsl',
+                'scope:core',
+                'scope:shared',
+              ],
             },
             {
               sourceTag: 'type:example',

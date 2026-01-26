@@ -1,7 +1,14 @@
 #!/bin/bash
 
-# Publish all packages from libs/dist directories
-echo "Publishing all packages to npm..."
+echo "🔨 Building all packages..."
+npx nx run-many -t build
+
+echo ""
+echo "📋 Copying package.json files..."
+./scripts/copy-package-json.sh
+
+echo ""
+echo "📦 Publishing all packages to npm..."
 
 ROOT_DIR=$(pwd)
 
