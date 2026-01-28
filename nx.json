@@ -13,7 +13,7 @@
       "!{projectRoot}/jest.config.[jt]s",
       "!{projectRoot}/test-setup.[jt]s"
     ],
-    "sharedGlobals": []
+    "sharedGlobals": ["{workspaceRoot}/eslint.config.mjs", "{workspaceRoot}/.eslintignore", "{workspaceRoot}/vite.config.mts", "{workspaceRoot}/vitest.config.ts"]
   },
   "plugins": [
     {
@@ -89,6 +89,12 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "build": {
+      "inputs": ["production", "^production", {"externalDependencies": ["vite", "vitest"]}]
+    },
+    "lint": {
+      "inputs": ["default", "^default", {"externalDependencies": ["eslint"]}]
     }
   },
   "workspaceLayout": {

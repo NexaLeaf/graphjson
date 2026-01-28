@@ -1,21 +1,31 @@
 {
   "name": "sdk",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "sdk/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/sdk/src",
   "projectType": "library",
   "release": {
     "version": {
-      "manifestRootsToUpdate": ["dist/{projectRoot}"],
+      "manifestRootsToUpdate": [
+        "dist/{projectRoot}"
+      ],
       "currentVersionResolver": "git-tag",
       "fallbackCurrentVersionResolver": "disk"
     }
   },
-  "tags": ["scope:sdk"],
+  "tags": [
+    "scope:sdk"
+  ],
   "targets": {
     "nx-release-publish": {
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
+    },
+    "lint": {
+      "inputs": [
+        "{workspaceRoot}/eslint.config.mjs",
+        "{workspaceRoot}/.eslintignore"
+      ]
     }
   }
 }

@@ -11,6 +11,13 @@
         "command": "npx tsx examples/basic/run.ts",
         "cwd": "{workspaceRoot}"
       }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/basic/**/*.ts"]
+      }
     }
   }
 }

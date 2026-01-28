@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/cli/src",
   "projectType": "application",
-  "tags": [],
+  "tags": ["type:app"],
   "targets": {
     "build": {
       "executor": "@nx/esbuild:esbuild",
@@ -37,6 +37,14 @@
       "dependsOn": ["build"],
       "options": {
         "buildTarget": "cli:build"
+      }
+    },
+
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/cli/**/*.ts"]
       }
     }
   }

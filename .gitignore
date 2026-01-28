@@ -1,21 +1,36 @@
 # See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# compiled output
+# Compiled output
 dist
 tmp
 out-tsc
+build
+*.tsbuildinfo
 
-# dependencies
+# Dependencies
 node_modules
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
 
 # IDEs and editors
-/.idea
+.idea/
 .project
 .classpath
 .c9/
 *.launch
 .settings/
 *.sublime-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
 
 # IDE - VSCode
 .vscode/*
@@ -24,24 +39,66 @@ node_modules
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
+# IDE - WebStorm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# IDE - JetBrains
+*.jb
+*.jbx
+
+# Misc
+.sass-cache/
+connect.lock
+coverage/
+libpeerconnection.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 testem.log
 /typings
 
-# System Files
-.DS_Store
-Thumbs.db
-
+# Nx
 .nx/cache
 .nx/workspace-data
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
 
+# Vite
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
+
+# Local registry
+tmp/local-registry/
+
+# OS
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+._*
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Build artifacts
+dist/
+build/
+out/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Husky
+.husky/_

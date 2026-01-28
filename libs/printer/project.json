@@ -1,21 +1,31 @@
 {
   "name": "printer",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "printer/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/printer/src",
   "projectType": "library",
   "release": {
     "version": {
-      "manifestRootsToUpdate": ["dist/{projectRoot}"],
+      "manifestRootsToUpdate": [
+        "dist/{projectRoot}"
+      ],
       "currentVersionResolver": "git-tag",
       "fallbackCurrentVersionResolver": "disk"
     }
   },
-  "tags": ["scope:printer"],
+  "tags": [
+    "scope:printer"
+  ],
   "targets": {
     "nx-release-publish": {
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
+    },
+    "lint": {
+      "inputs": [
+        "{workspaceRoot}/eslint.config.mjs",
+        "{workspaceRoot}/.eslintignore"
+      ]
     }
   }
 }

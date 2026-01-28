@@ -1,21 +1,31 @@
 {
   "name": "presets",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "presets/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/presets/src",
   "projectType": "library",
   "release": {
     "version": {
-      "manifestRootsToUpdate": ["dist/{projectRoot}"],
+      "manifestRootsToUpdate": [
+        "dist/{projectRoot}"
+      ],
       "currentVersionResolver": "git-tag",
       "fallbackCurrentVersionResolver": "disk"
     }
   },
-  "tags": ["scope:presets"],
+  "tags": [
+    "scope:presets"
+  ],
   "targets": {
     "nx-release-publish": {
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
+    },
+    "lint": {
+      "inputs": [
+        "{workspaceRoot}/eslint.config.mjs",
+        "{workspaceRoot}/.eslintignore"
+      ]
     }
   }
 }

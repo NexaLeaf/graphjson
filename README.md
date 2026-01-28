@@ -1,204 +1,342 @@
-# Nx TypeScript Repository
+# GraphJSON
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A powerful GraphQL query builder and execution framework for TypeScript. GraphJSON enables you to build, parse, and execute GraphQL queries programmatically with a focus on type safety and developer experience.
 
-✨ A repository showcasing key [Nx](https://nx.dev) features for TypeScript monorepos ✨
+[![npm version](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 📦 Project Overview
+## 🎯 Features
 
-This repository demonstrates a production-ready TypeScript monorepo with:
+- **Type-Safe Query Building** - Build GraphQL queries with full TypeScript support
+- **Modular Architecture** - Composable libraries for different use cases
+- **AST-Based Processing** - Work with GraphQL Abstract Syntax Trees
+- **Plugin System** - Extend functionality with custom plugins
+- **Schema Support** - Validate queries against GraphQL schemas
+- **Multiple Presets** - Pre-configured setups for common scenarios
+- **Monorepo Structure** - Well-organized, scalable codebase using Nx
 
-- **3 Publishable Packages** - Ready for NPM publishing
+## 📦 Packages
 
-  - `@org/strings` - String manipulation utilities
-  - `@org/async` - Async utility functions with retry logic
-  - `@org/colors` - Color conversion and manipulation utilities
+### Core Libraries
 
-- **1 Internal Library**
-  - `@org/utils` - Shared utilities (private, not published)
+| Package | Purpose | Status |
+|---------|---------|--------|
+| `@graphjson/core` | Core query building and execution | ✅ Published |
+| `@graphjson/ast` | Abstract Syntax Tree utilities | ✅ Published |
+| `@graphjson/json-dsl` | JSON-based DSL for queries | ✅ Published |
+| `@graphjson/parser` | GraphQL query parser | ✅ Published |
+| `@graphjson/printer` | Query printing and formatting | ✅ Published |
+| `@graphjson/schema` | Schema validation and utilities | ✅ Published |
+| `@graphjson/sdk` | High-level SDK for common operations | ✅ Published |
+| `@graphjson/plugins` | Plugin system and built-in plugins | ✅ Published |
+| `@graphjson/presets` | Pre-configured query presets | ✅ Published |
+| `@graphjson/shared` | Shared utilities (internal) | 🔒 Private |
+
+### CLI
+
+| Package | Purpose |
+|---------|---------|
+| `@graphjson/cli` | Command-line interface for GraphJSON |
 
 ## 🚀 Quick Start
 
+### Installation
+
+```bash
+npm install @graphjson/core @graphjson/sdk
+```
+
+### Basic Usage
+
+```typescript
+import { buildQuery } from '@graphjson/core';
+import { execute } from '@graphjson/sdk';
+
+// Build a query
+const query = buildQuery({
+  operation: 'query',
+  name: 'GetUser',
+  fields: {
+    user: {
+      args: { id: '123' },
+      fields: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    },
+  },
+});
+
+// Execute against your GraphQL endpoint
+const result = await execute(query, 'https://api.example.com/graphql');
+console.log(result);
+```
+
+## 📚 Documentation
+
+- [Getting Started Guide](./docs/docs/intro.md)
+- [API Documentation](./docs/docs/api/)
+- [Tutorial Basics](./docs/docs/tutorial-basics/)
+- [Advanced Examples](./examples/)
+- [Publishing Guide](./PUBLISHING.md)
+
+## 🏗️ Project Structure
+
+```
+graphjson/
+├── libs/                          # Core libraries
+│   ├── core/                      # Core functionality
+│   ├── ast/                       # AST utilities
+│   ├── json-dsl/                  # JSON DSL
+│   ├── parser/                    # Query parser
+│   ├── printer/                   # Query printer
+│   ├── schema/                    # Schema validation
+│   ├── sdk/                       # High-level SDK
+│   ├── plugins/                   # Plugin system
+│   ├── presets/                   # Query presets
+│   └── shared/                    # Shared utilities (private)
+├── apps/
+│   └── cli/                       # CLI application
+├── examples/                      # Example projects
+│   ├── basic/                     # Basic usage
+│   ├── advanced/                  # Advanced patterns
+│   ├── pagination/                # Pagination examples
+│   ├── variables/                 # Query variables
+│   └── multilevel/                # Complex queries
+├── docs/                          # Documentation site (Docusaurus)
+├── nx.json                        # Nx configuration
+├── tsconfig.base.json             # TypeScript configuration
+└── package.json                   # Root package configuration
+```
+
+## 🔧 Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm or pnpm
+
+### Setup
+
 ```bash
 # Clone the repository
-git clone <your-fork-url>
-cd typescript-template
+git clone https://github.com/NexaLeaf/graphjson.git
+cd graphjson
 
 # Install dependencies
 npm install
 
 # Build all packages
-npx nx run-many -t build
+npm run build
 
 # Run tests
-npx nx run-many -t test
+npm run test
 
-# Lint all projects
-npx nx run-many -t lint
+# Run linting
+npm run lint
 
-# Run everything in parallel
-npx nx run-many -t lint test build --parallel=3
-
-# Visualize the project graph
-npx nx graph
+# Format code
+npm run format
 ```
 
-## ⭐ Featured Nx Capabilities
-
-This repository showcases several powerful Nx features:
-
-### 1. 🔒 Module Boundaries
-
-Enforces architectural constraints using tags. Each package has specific dependencies it can use:
-
-- `scope:shared` (utils) - Can be used by all packages
-- `scope:strings` - Can only depend on shared utilities
-- `scope:async` - Can only depend on shared utilities
-- `scope:colors` - Can only depend on shared utilities
-
-**Try it out:**
+### Available Commands
 
 ```bash
-# See the current project graph and boundaries
-npx nx graph
+# Build
+npm run build              # Build all packages
+npm run build:watch       # Build in watch mode
 
-# View a specific project's details
-npx nx show project strings --web
-```
+# Testing
+npm run test              # Run all tests
+npm run test:watch        # Run tests in watch mode
+npm run test:coverage     # Generate coverage reports
 
-[Learn more about module boundaries →](https://nx.dev/features/enforce-module-boundaries)
-
-### 2. 🛠️ Custom Run Commands
-
-Packages can define custom commands beyond standard build/test/lint:
-
-```bash
-# Run the custom build-base command for strings package
-npx nx run strings:build-base
-
-# See all available targets for a project
-npx nx show project strings
-```
-
-[Learn more about custom run commands →](https://nx.dev/concepts/executors-and-configurations)
-
-### 3. 🔧 Self-Healing CI
-
-The CI pipeline includes `nx fix-ci` which automatically identifies and suggests fixes for common issues. To test it, you can make a change to `async-retry.spec.ts` so that it fails, and create a PR.
-
-```bash
-# Run tests and see the failure
-npx nx test async
-
-# In CI, this command provides automated fixes
-npx nx fix-ci
-```
-
-[Learn more about self-healing CI →](https://nx.dev/ci/features/self-healing-ci)
-
-### 4. 📦 Package Publishing
-
-Manage releases and publishing with Nx Release:
-
-```bash
-# Dry run to see what would be published
-npx nx release --dry-run
-
-# Version and release packages
-npx nx release
-
-# Publish only specific packages
-npx nx release publish --projects=strings,colors
-```
-
-[Learn more about Nx Release →](https://nx.dev/features/manage-releases)
-
-## 📁 Project Structure
-
-```
-├── packages/
-│   ├── strings/     [scope:strings] - String utilities (publishable)
-│   ├── async/       [scope:async]   - Async utilities (publishable)
-│   ├── colors/      [scope:colors]  - Color utilities (publishable)
-│   └── utils/       [scope:shared]  - Shared utilities (private)
-├── nx.json          - Nx configuration
-├── tsconfig.json    - TypeScript configuration
-└── eslint.config.mjs - ESLint with module boundary rules
-```
-
-## 🏷️ Understanding Tags
-
-This repository uses tags to enforce module boundaries:
-
-| Package        | Tag             | Can Import From        |
-| -------------- | --------------- | ---------------------- |
-| `@org/utils`   | `scope:shared`  | Nothing (base library) |
-| `@org/strings` | `scope:strings` | `scope:shared`         |
-| `@org/async`   | `scope:async`   | `scope:shared`         |
-| `@org/colors`  | `scope:colors`  | `scope:shared`         |
-
-The ESLint configuration enforces these boundaries, preventing circular dependencies and maintaining clean architecture.
-
-## 🧪 Testing Module Boundaries
-
-To see module boundary enforcement in action:
-
-1. Try importing `@org/colors` into `@org/strings`
-2. Run `npx nx lint strings`
-3. You'll see an error about violating module boundaries
-
-## 📚 Useful Commands
-
-```bash
-# Project exploration
-npx nx graph                                    # Interactive dependency graph
-npx nx list                                     # List installed plugins
-npx nx show project strings --web              # View project details
+# Code Quality
+npm run lint              # Lint all packages
+npm run lint:fix          # Fix linting issues
+npm run format            # Format code with Prettier
+npm run format:check      # Check formatting
 
 # Development
-npx nx build strings                           # Build a specific package
-npx nx test async                              # Test a specific package
-npx nx lint colors                             # Lint a specific package
+npm run dev               # Start development mode
+npm run graph             # Visualize project graph
 
-# Running multiple tasks
-npx nx run-many -t build                       # Build all projects
-npx nx run-many -t test --parallel=3          # Test in parallel
-npx nx run-many -t lint test build            # Run multiple targets
+# Documentation
+npm run docs:build        # Build documentation site
+npm run docs:serve        # Serve documentation locally
 
-# Affected commands (great for CI)
-npx nx affected -t build                       # Build only affected projects
-npx nx affected -t test                        # Test only affected projects
-
-# Release management
-npx nx release --dry-run                       # Preview release changes
-npx nx release                                 # Create a new release
+# Publishing
+npm run release           # Create a new release (dry-run)
+npm run release:publish   # Publish packages to npm
 ```
 
-## Nx Cloud
+### Nx Commands
 
-Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+This project uses Nx for task orchestration. Common Nx commands:
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+```bash
+# View project graph
+npx nx graph
 
-## 🔗 Learn More
+# Build specific package
+npx nx build core
 
-- [Nx Documentation](https://nx.dev)
-- [Module Boundaries](https://nx.dev/features/enforce-module-boundaries)
-- [Custom Commands](https://nx.dev/concepts/executors-and-configurations)
-- [Self-Healing CI](https://nx.dev/ci/features/self-healing-ci)
-- [Releasing Packages](https://nx.dev/features/manage-releases)
-- [Nx Cloud](https://nx.dev/ci/intro/why-nx-cloud)
+# Run tests for affected packages
+npx nx affected -t test
 
-## 💬 Community
+# Run multiple tasks in parallel
+npx nx run-many -t build test lint --parallel=4
 
-Join the Nx community:
+# View project details
+npx nx show project core --web
+```
 
-- [Discord](https://go.nx.dev/community)
-- [X (Twitter)](https://twitter.com/nxdevtools)
-- [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [YouTube](https://www.youtube.com/@nxdevtools)
-- [Blog](https://nx.dev/blog)
-# graphjson
+## 🏷️ Module Boundaries
+
+This monorepo enforces strict module boundaries using Nx tags:
+
+| Library | Tag | Can Import From |
+|---------|-----|-----------------|
+| `core` | `scope:core` | `ast`, `json-dsl`, `shared`, `plugins` |
+| `ast` | `scope:ast` | `json-dsl` |
+| `json-dsl` | `scope:json-dsl` | `json-dsl` only |
+| `parser` | `scope:parser` | `json-dsl` |
+| `printer` | `scope:printer` | `ast` |
+| `schema` | `scope:schema` | `json-dsl`, `shared` |
+| `sdk` | `scope:sdk` | `json-dsl`, `core`, `shared` |
+| `plugins` | `scope:plugins` | `plugins` only |
+| `presets` | `scope:presets` | `plugins` |
+| `shared` | `scope:shared` | `shared` only |
+
+These boundaries are enforced by ESLint and prevent circular dependencies.
+
+## 📖 Examples
+
+### Basic Query
+
+```typescript
+import { buildQuery } from '@graphjson/core';
+
+const query = buildQuery({
+  operation: 'query',
+  fields: {
+    users: {
+      fields: {
+        id: true,
+        name: true,
+      },
+    },
+  },
+});
+```
+
+### With Variables
+
+```typescript
+const query = buildQuery({
+  operation: 'query',
+  variables: {
+    userId: 'ID!',
+  },
+  fields: {
+    user: {
+      args: { id: '$userId' },
+      fields: {
+        id: true,
+        name: true,
+      },
+    },
+  },
+});
+```
+
+### Using Presets
+
+```typescript
+import { getUserPreset } from '@graphjson/presets';
+
+const query = getUserPreset({ userId: '123' });
+```
+
+See the [examples](./examples/) directory for more detailed examples.
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+npm run test
+
+# Run tests for specific package
+npx nx test core
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+```
+
+## 📝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
+
+### Development Workflow
+
+1. Create a feature branch: `git checkout -b feature/my-feature`
+2. Make your changes and commit: `git commit -am 'Add my feature'`
+3. Push to the branch: `git push origin feature/my-feature`
+4. Submit a Pull Request
+
+### Code Standards
+
+- All code must pass linting: `npm run lint`
+- All code must be formatted: `npm run format`
+- All tests must pass: `npm run test`
+- TypeScript strict mode is enforced
+- Module boundaries must be respected
+
+## 🔄 Release Process
+
+This project uses Nx Release for version management and publishing:
+
+```bash
+# Preview what will be released
+npm run release -- --dry-run
+
+# Create a new release
+npm run release
+
+# Publish to npm
+npm run release:publish
+```
+
+See [PUBLISHING.md](./PUBLISHING.md) for detailed release instructions.
+
+## 📄 License
+
+MIT © 2024 NexaLeaf
+
+## 🤝 Support
+
+- 📖 [Documentation](./docs/)
+- 💬 [GitHub Discussions](https://github.com/NexaLeaf/graphjson/discussions)
+- 🐛 [Issue Tracker](https://github.com/NexaLeaf/graphjson/issues)
+
+## ☕ Buy Me a Coffee
+
+If you find GraphJSON helpful and would like to support its development, consider buying me a coffee!
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/palanisamy)
+
+Your support helps maintain and improve this project. Thank you! 🙏
+
+## 🔗 Resources
+
+- [GraphQL Official Site](https://graphql.org/)
+- [Nx Documentation](https://nx.dev/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+
+---
+
+**Made with ❤️ by NexaLeaf**

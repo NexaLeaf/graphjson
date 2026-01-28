@@ -1,21 +1,31 @@
 {
   "name": "schema",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "schema/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/schema/src",
   "projectType": "library",
   "release": {
     "version": {
-      "manifestRootsToUpdate": ["dist/{projectRoot}"],
+      "manifestRootsToUpdate": [
+        "dist/{projectRoot}"
+      ],
       "currentVersionResolver": "git-tag",
       "fallbackCurrentVersionResolver": "disk"
     }
   },
-  "tags": ["scope:schema"],
+  "tags": [
+    "scope:schema"
+  ],
   "targets": {
     "nx-release-publish": {
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
+    },
+    "lint": {
+      "inputs": [
+        "{workspaceRoot}/eslint.config.mjs",
+        "{workspaceRoot}/.eslintignore"
+      ]
     }
   }
 }

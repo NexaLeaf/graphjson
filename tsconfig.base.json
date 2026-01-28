@@ -27,7 +27,7 @@
       "@graphjson/plugins": ["libs/plugins/src/index.ts"],
       "@graphjson/presets": ["libs/presets/src/index.ts"],
       "@graphjson/sdk": ["libs/sdk/src/index.ts"],
-      "@nexaleaf/parser": ["parser/src/index.ts"]
+      "@graphjson/parser": ["libs/parser/src/index.ts"]
     }
   }
 }

@@ -4,42 +4,106 @@ on:
   push:
     branches:
       - main
+      - develop
   pull_request:
+    branches:
+      - main
+      - develop
 
 permissions:
-  actions: read
   contents: read
+  checks: write
+  pull-requests: write
 
 jobs:
-  main:
+  lint:
     runs-on: ubuntu-latest
-
+    name: Lint
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+          cache: npm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
-      # Optional: Nx tasks
-      # - name: Lint
-      #   run: pnpm nx lint
+      - name: Run linting
+        run: npm run lint
 
-      # - name: Test
-      #   run: pnpm nx test
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      # - name: Build
-      #   run: pnpm nx build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test -- --coverage
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/coverage-final.json
+          flags: unittests
+          name: codecov-umbrella
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build packages
+        run: npm run build
+
+      - name: Type check
+        run: npm run typecheck
+
+  affected:
+    runs-on: ubuntu-latest
+    name: Affected
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run affected tests
+        run: npx nx affected -t test
+
+      - name: Run affected lint
+        run: npx nx affected -t lint
+
+      - name: Run affected build
+        run: npx nx affected -t build

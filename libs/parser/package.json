@@ -1,9 +1,18 @@
 {
   "name": "@graphjson/parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "Complete GraphJSON parser - convenient wrapper that includes all GraphJSON libraries",
-  "keywords": ["graphql", "json", "query", "parser", "graphjson", "ast", "schema", "sdk"],
+  "keywords": [
+    "graphql",
+    "json",
+    "query",
+    "parser",
+    "graphjson",
+    "ast",
+    "schema",
+    "sdk"
+  ],
   "author": "GraphJSON",
   "license": "MIT",
   "repository": {
