@@ -43,9 +43,9 @@ Instead of hardcoding values, use the `$var` syntax:
 {
   "args": {
     "id": {
-      "$var": "userId",     // Variable name
-      "type": "ID!",        // GraphQL type
-      "default": "123"      // Optional default value
+      "$var": "userId", // Variable name
+      "type": "ID!", // GraphQL type
+      "default": "123" // Optional default value
     }
   }
 }
@@ -105,7 +105,7 @@ query($userId: ID!) {
 
 ```json
 {
-  "id": { "$var": "id", "type": "ID!" },      // Required (!)
+  "id": { "$var": "id", "type": "ID!" }, // Required (!)
   "name": { "$var": "name", "type": "String" } // Optional
 }
 ```
@@ -119,14 +119,17 @@ Provide defaults for optional variables:
   "limit": {
     "$var": "limit",
     "type": "Int",
-    "default": 10        // ← Default value
+    "default": 10 // ← Default value
   }
 }
 ```
 
 Result:
+
 ```typescript
-variables: { limit: 10 }
+variables: {
+  limit: 10;
+}
 ```
 
 ## Complete Example with Defaults
@@ -164,7 +167,7 @@ variables: { limit: 10 }
 Generated GraphQL:
 
 ```graphql
-query($limit: Int, $offset: Int, $search: String) {
+query ($limit: Int, $offset: Int, $search: String) {
   users(limit: $limit, offset: $offset, search: $search) {
     id
     name
@@ -174,6 +177,7 @@ query($limit: Int, $offset: Int, $search: String) {
 ```
 
 Variables object:
+
 ```json
 {
   "limit": 10,
@@ -195,8 +199,8 @@ const { ast, variables } = generateDocument(query);
 // Override default values
 const result = await client.request(ast, {
   ...variables,
-  userId: "user-123",  // Provide actual value
-  limit: 20            // Override default
+  userId: 'user-123', // Provide actual value
+  limit: 20, // Override default
 });
 ```
 
@@ -209,14 +213,14 @@ const query: JsonDocument = {
   query: {
     user: {
       args: {
-        id: { $var: 'userId', type: 'ID!' }
+        id: { $var: 'userId', type: 'ID!' },
       },
       select: {
         id: true,
-        email: true
-      }
-    }
-  }
+        email: true,
+      },
+    },
+  },
 };
 ```
 
@@ -263,7 +267,7 @@ const query: JsonDocument = {
 ✅ **Type Safety** - GraphQL validates variable types  
 ✅ **Performance** - Queries can be cached and reused  
 ✅ **Security** - Prevents injection attacks  
-✅ **Cleaner Code** - Separate data from structure  
+✅ **Cleaner Code** - Separate data from structure
 
 ## Troubleshooting
 
@@ -276,7 +280,7 @@ const query: JsonDocument = {
 ```json
 {
   "args": {
-    "id": { "$var": "userId", "type": "ID!" }  // ✓ Correct
+    "id": { "$var": "userId", "type": "ID!" } // ✓ Correct
   }
 }
 ```

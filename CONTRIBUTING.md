@@ -197,12 +197,14 @@ BREAKING CHANGE: The buildQuery function now requires a config object"
 ### Before Submitting
 
 1. **Sync with upstream**:
+
    ```bash
    git fetch upstream
    git rebase upstream/main
    ```
 
 2. **Run all checks**:
+
    ```bash
    npm run lint
    npm run test
@@ -215,6 +217,7 @@ BREAKING CHANGE: The buildQuery function now requires a config object"
 ### Creating a Pull Request
 
 1. **Push your branch**:
+
    ```bash
    git push origin feature/my-feature
    ```
@@ -236,22 +239,27 @@ BREAKING CHANGE: The buildQuery function now requires a config object"
 
 ```markdown
 ## Description
+
 Brief description of the changes.
 
 ## Related Issues
+
 Fixes #123
 Related to #456
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## Testing
+
 Describe how you tested these changes.
 
 ## Checklist
+
 - [ ] Tests pass locally
 - [ ] Code follows style guidelines
 - [ ] Documentation updated
@@ -298,9 +306,9 @@ describe('buildQuery', () => {
     const result = buildQuery({
       query: {
         users: {
-          select: { id: true, name: true }
-        }
-      }
+          select: { id: true, name: true },
+        },
+      },
     });
 
     expect(result.ast).toBeDefined();
@@ -312,11 +320,11 @@ describe('buildQuery', () => {
       query: {
         user: {
           args: {
-            id: { $var: 'userId', type: 'ID!', default: '123' }
+            id: { $var: 'userId', type: 'ID!', default: '123' },
           },
-          select: { name: true }
-        }
-      }
+          select: { name: true },
+        },
+      },
     });
 
     expect(result.variables).toEqual({ userId: '123' });
@@ -371,7 +379,7 @@ Respect the module boundary constraints defined in `eslint.config.mjs`. Each lib
 
 ### JSDoc Example
 
-```typescript
+````typescript
 /**
  * Generates a GraphQL document from a JSON query definition.
  *
@@ -388,7 +396,7 @@ Respect the module boundary constraints defined in `eslint.config.mjs`. Each lib
 export function generateDocument(json: JsonDocument): GenerateResult {
   // Implementation
 }
-```
+````
 
 ### README Updates
 
@@ -436,6 +444,7 @@ Changelogs are auto-generated from commits. Ensure your commit messages are clea
 ## Recognition
 
 Contributors will be recognized in:
+
 - CONTRIBUTORS.md file
 - Release notes
 - GitHub contributors page

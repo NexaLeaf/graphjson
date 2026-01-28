@@ -28,6 +28,7 @@ export default [
                 'scope:json-dsl',
                 'scope:shared',
                 'scope:plugins',
+                'scope:presets',
               ],
             },
             {
@@ -77,6 +78,10 @@ export default [
                 'scope:core',
                 'scope:shared',
               ],
+            },
+            {
+              sourceTag: 'scope:parser',
+              onlyDependOnLibsWithTags: ['*'],
             },
             {
               sourceTag: 'type:example',

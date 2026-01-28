@@ -29,12 +29,7 @@ export interface JsonField {
   paginate?: 'relay' | 'cursor' | 'offset';
 }
 
-
-
-export type JsonSelection =
-  | true
-  | JsonField
-  | { [fragment: `...${string}`]: true };
+export type JsonSelection = true | JsonField | { [fragment: `...${string}`]: true };
 
 export interface JsonOperation {
   [field: string]: JsonField;

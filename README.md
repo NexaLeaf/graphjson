@@ -19,23 +19,23 @@ A powerful GraphQL query builder and execution framework for TypeScript. GraphJS
 
 ### Core Libraries
 
-| Package | Purpose | Status |
-|---------|---------|--------|
-| `@graphjson/core` | Core query building and execution | ✅ Published |
-| `@graphjson/ast` | Abstract Syntax Tree utilities | ✅ Published |
-| `@graphjson/json-dsl` | JSON-based DSL for queries | ✅ Published |
-| `@graphjson/parser` | GraphQL query parser | ✅ Published |
-| `@graphjson/printer` | Query printing and formatting | ✅ Published |
-| `@graphjson/schema` | Schema validation and utilities | ✅ Published |
-| `@graphjson/sdk` | High-level SDK for common operations | ✅ Published |
-| `@graphjson/plugins` | Plugin system and built-in plugins | ✅ Published |
-| `@graphjson/presets` | Pre-configured query presets | ✅ Published |
-| `@graphjson/shared` | Shared utilities (internal) | 🔒 Private |
+| Package               | Purpose                              | Status       |
+| --------------------- | ------------------------------------ | ------------ |
+| `@graphjson/core`     | Core query building and execution    | ✅ Published |
+| `@graphjson/ast`      | Abstract Syntax Tree utilities       | ✅ Published |
+| `@graphjson/json-dsl` | JSON-based DSL for queries           | ✅ Published |
+| `@graphjson/parser`   | GraphQL query parser                 | ✅ Published |
+| `@graphjson/printer`  | Query printing and formatting        | ✅ Published |
+| `@graphjson/schema`   | Schema validation and utilities      | ✅ Published |
+| `@graphjson/sdk`      | High-level SDK for common operations | ✅ Published |
+| `@graphjson/plugins`  | Plugin system and built-in plugins   | ✅ Published |
+| `@graphjson/presets`  | Pre-configured query presets         | ✅ Published |
+| `@graphjson/shared`   | Shared utilities (internal)          | 🔒 Private   |
 
 ### CLI
 
-| Package | Purpose |
-|---------|---------|
+| Package          | Purpose                              |
+| ---------------- | ------------------------------------ |
 | `@graphjson/cli` | Command-line interface for GraphJSON |
 
 ## 🚀 Quick Start
@@ -196,18 +196,18 @@ npx nx show project core --web
 
 This monorepo enforces strict module boundaries using Nx tags:
 
-| Library | Tag | Can Import From |
-|---------|-----|-----------------|
-| `core` | `scope:core` | `ast`, `json-dsl`, `shared`, `plugins` |
-| `ast` | `scope:ast` | `json-dsl` |
-| `json-dsl` | `scope:json-dsl` | `json-dsl` only |
-| `parser` | `scope:parser` | `json-dsl` |
-| `printer` | `scope:printer` | `ast` |
-| `schema` | `scope:schema` | `json-dsl`, `shared` |
-| `sdk` | `scope:sdk` | `json-dsl`, `core`, `shared` |
-| `plugins` | `scope:plugins` | `plugins` only |
-| `presets` | `scope:presets` | `plugins` |
-| `shared` | `scope:shared` | `shared` only |
+| Library    | Tag              | Can Import From                        |
+| ---------- | ---------------- | -------------------------------------- |
+| `core`     | `scope:core`     | `ast`, `json-dsl`, `shared`, `plugins` |
+| `ast`      | `scope:ast`      | `json-dsl`                             |
+| `json-dsl` | `scope:json-dsl` | `json-dsl` only                        |
+| `parser`   | `scope:parser`   | `json-dsl`                             |
+| `printer`  | `scope:printer`  | `ast`                                  |
+| `schema`   | `scope:schema`   | `json-dsl`, `shared`                   |
+| `sdk`      | `scope:sdk`      | `json-dsl`, `core`, `shared`           |
+| `plugins`  | `scope:plugins`  | `plugins` only                         |
+| `presets`  | `scope:presets`  | `plugins`                              |
+| `shared`   | `scope:shared`   | `shared` only                          |
 
 These boundaries are enforced by ESLint and prevent circular dependencies.
 

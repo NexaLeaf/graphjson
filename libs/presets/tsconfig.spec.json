@@ -6,10 +6,5 @@
     "moduleResolution": "bundler",
     "types": ["jest", "node"]
   },
-  "include": [
-    "jest.config.ts",
-    "jest.config.cts",
-    "src/**/*.ts",
-    "src/**/*.d.ts"
-  ]
+  "include": ["jest.config.ts", "jest.config.cts", "src/**/*.ts", "src/**/*.d.ts"]
 }

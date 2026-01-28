@@ -22,6 +22,7 @@ When you publish a package to NPM, the registry displays your README.md file as 
 **Source**: The README.md from your package root (for this project: `libs/*/README.md`)
 
 **Location**: Each library should have:
+
 ```
 libs/core/
   ├── package.json
@@ -81,9 +82,13 @@ Brief paragraph explaining what the package does and why someone would use it.
 
 \`\`\`bash
 npm install @graphjson/core
+
 # or
+
 yarn add @graphjson/core
+
 # or
+
 pnpm add @graphjson/core
 \`\`\`
 
@@ -94,23 +99,25 @@ import { generateDocument } from '@graphjson/core';
 
 // Simple example that shows immediate value
 const result = generateDocument({
-  query: {
-    users: {
-      select: {
-        id: true,
-        name: true
-      }
-    }
-  }
+query: {
+users: {
+select: {
+id: true,
+name: true
+}
+}
+}
 });
 \`\`\`
 
 ## Usage
 
 ### Basic Example
+
 [Detailed example with explanation]
 
 ### Advanced Example
+
 [More complex use case]
 
 ## API Reference
@@ -120,6 +127,7 @@ const result = generateDocument({
 Description of what it does.
 
 **Parameters:**
+
 - `param1` (Type): Description
 - `param2` (Type): Description
 
@@ -151,6 +159,7 @@ MIT © [Your Name]
 ### 2. Essential Sections
 
 **Must Have:**
+
 - Clear title
 - One-line description
 - Installation instructions
@@ -158,12 +167,14 @@ MIT © [Your Name]
 - API documentation
 
 **Should Have:**
+
 - Features list
 - Usage examples
 - Configuration options
 - License
 
 **Nice to Have:**
+
 - Badges
 - Table of contents (for long READMEs)
 - Related packages
@@ -173,6 +184,7 @@ MIT © [Your Name]
 ### 3. Writing Tips
 
 ✅ **Do:**
+
 - Start with the most common use case
 - Use code examples generously
 - Keep language clear and concise
@@ -180,6 +192,7 @@ MIT © [Your Name]
 - Link to full documentation if available
 
 ❌ **Don't:**
+
 - Assume prior knowledge
 - Use jargon without explanation
 - Make examples too complex
@@ -222,16 +235,16 @@ npm install @graphjson/core
 import { generateDocument } from '@graphjson/core';
 
 const jsonQuery = {
-  query: {
-    users: {
-      args: { limit: 10 },
-      select: {
-        id: true,
-        name: true,
-        email: true
-      }
-    }
-  }
+query: {
+users: {
+args: { limit: 10 },
+select: {
+id: true,
+name: true,
+email: true
+}
+}
+}
 };
 
 const { ast, variables } = generateDocument(jsonQuery);
@@ -250,20 +263,20 @@ Transform JSON queries into GraphQL DocumentNode:
 import { generateDocument } from '@graphjson/core';
 
 const result = generateDocument({
-  query: {
-    user: {
-      args: { id: "123" },
-      select: {
-        id: true,
-        profile: {
-          select: {
-            avatar: true,
-            bio: true
-          }
-        }
-      }
-    }
-  }
+query: {
+user: {
+args: { id: "123" },
+select: {
+id: true,
+profile: {
+select: {
+avatar: true,
+bio: true
+}
+}
+}
+}
+}
 });
 \`\`\`
 
@@ -273,17 +286,17 @@ Use GraphQL variables for dynamic queries:
 
 \`\`\`typescript
 const result = generateDocument({
-  query: {
-    users: {
-      args: {
-        limit: { $var: "limit", type: "Int!", default: 10 }
-      },
-      select: {
-        id: true,
-        name: true
-      }
-    }
-  }
+query: {
+users: {
+args: {
+limit: { $var: "limit", type: "Int!", default: 10 }
+},
+select: {
+id: true,
+name: true
+}
+}
+}
 });
 
 // Result includes variables object
@@ -297,16 +310,18 @@ console.log(result.variables); // { limit: 10 }
 Converts a JSON query definition to a GraphQL DocumentNode.
 
 **Parameters:**
+
 - `json` (JsonDocument): The JSON query definition
 
 **Returns:** `GenerateResult` object with:
+
 - `ast` (DocumentNode): GraphQL AST
 - `variables` (Record<string, any>): Variable values
 
 **Example:**
 \`\`\`typescript
 const { ast, variables } = generateDocument({
-  query: { users: { select: { id: true } } }
+query: { users: { select: { id: true } } }
 });
 \`\`\`
 
@@ -315,6 +330,7 @@ const { ast, variables } = generateDocument({
 Applies transformation plugins to a GraphQL document.
 
 **Parameters:**
+
 - `document` (DocumentNode): The GraphQL AST
 - `plugins` (GraphJsonPlugin[]): Array of plugins to apply
 
@@ -382,6 +398,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 ReactDOM.render(
+
   <h1>Hello, world!</h1>,
   document.getElementById('root')
 );
@@ -393,6 +410,7 @@ Visit https://react.dev
 ```
 
 **Why it works:**
+
 - Immediate value proposition
 - Ultra-simple installation
 - Minimal but complete example
@@ -412,9 +430,9 @@ npm install lodash
 ## Usage
 
 \`\`\`javascript
-const _ = require('lodash');
+const \_ = require('lodash');
 
-_.defaults({ 'a': 1 }, { 'a': 3, 'b': 2 });
+\_.defaults({ 'a': 1 }, { 'a': 3, 'b': 2 });
 // → { 'a': 1, 'b': 2 }
 \`\`\`
 
@@ -426,6 +444,7 @@ _.defaults({ 'a': 1 }, { 'a': 3, 'b': 2 });
 ```
 
 **Why it works:**
+
 - Clear positioning
 - Shows common use case
 - Highlights key benefits
@@ -452,12 +471,13 @@ npm install -D typescript
 
 \`\`\`typescript
 function greet(person: string): string {
-  return "Hello, " + person;
+return "Hello, " + person;
 }
 \`\`\`
 ```
 
 **Why it works:**
+
 - Step-by-step for beginners
 - Shows type system immediately
 - Clear progression
@@ -482,6 +502,7 @@ Add these to the top of your README:
 Format: `https://img.shields.io/badge/LABEL-MESSAGE-COLOR`
 
 Examples:
+
 ```markdown
 ![npm](https://img.shields.io/npm/v/@graphjson/core)
 ![downloads](https://img.shields.io/npm/dm/@graphjson/core)
@@ -566,8 +587,11 @@ Use hierarchical headings:
 
 ```markdown
 # H1: Package Name (only one)
+
 ## H2: Major sections
+
 ### H3: Subsections
+
 #### H4: Details
 ```
 
@@ -584,10 +608,10 @@ Use lists and tables:
 ```markdown
 ## Features
 
-| Feature | Description |
-|---------|-------------|
-| Fast | Lightning fast parsing |
-| Small | Only 5kb minified |
+| Feature | Description            |
+| ------- | ---------------------- |
+| Fast    | Lightning fast parsing |
+| Small   | Only 5kb minified      |
 ```
 
 ### Code Blocks Best Practices
@@ -600,13 +624,15 @@ Always specify the language:
 \`\`\`
 
 \`\`\`bash
+
 # Shell commands
+
 npm install package
 \`\`\`
 
 \`\`\`json
 {
-  "config": "example"
+"config": "example"
 }
 \`\`\`
 ```
@@ -617,12 +643,15 @@ npm install package
 
 ```markdown
 <!-- ❌ Won't work on NPM -->
+
 ![Logo](./logo.png)
 
 <!-- ✅ Works on NPM -->
+
 ![Logo](https://raw.githubusercontent.com/NexaLeaf/graphjson/main/assets/logo.png)
 
 <!-- ✅ Using NPM CDN -->
+
 ![Logo](https://cdn.jsdelivr.net/npm/@graphjson/core/logo.png)
 ```
 
@@ -663,7 +692,7 @@ import { mainFunction } from '@graphjson/{PACKAGE_NAME}';
 
 // Simple example showing primary use case
 const result = mainFunction({
-  // config
+// config
 });
 
 console.log(result);
@@ -698,10 +727,10 @@ console.log(result);
 
 **Parameters:**
 
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| param1 | string | Yes | {description} |
-| param2 | number | No | {description} |
+| Name   | Type   | Required | Description   |
+| ------ | ------ | -------- | ------------- |
+| param1 | string | Yes      | {description} |
+| param2 | number | No       | {description} |
 
 **Returns:** `ReturnType` - {description}
 
@@ -719,7 +748,7 @@ Full TypeScript support with type definitions included.
 import type { JsonDocument, JsonField } from '@graphjson/{PACKAGE_NAME}';
 
 const query: JsonDocument = {
-  // Fully typed
+// Fully typed
 };
 \`\`\`
 
@@ -787,23 +816,23 @@ npm install @graphjson/core @graphjson/json-dsl
 import { generateDocument } from '@graphjson/core';
 
 const { ast, variables } = generateDocument({
-  query: {
-    users: {
-      args: {
-        limit: { $var: 'limit', type: 'Int!', default: 10 }
-      },
-      select: {
-        id: true,
-        name: true,
-        posts: {
-          select: {
-            title: true,
-            content: true
-          }
-        }
-      }
-    }
-  }
+query: {
+users: {
+args: {
+limit: { $var: 'limit', type: 'Int!', default: 10 }
+},
+select: {
+id: true,
+name: true,
+posts: {
+select: {
+title: true,
+content: true
+}
+}
+}
+}
+}
 });
 
 // Use with any GraphQL client
@@ -818,9 +847,9 @@ Convert JSON to GraphQL DocumentNode:
 
 \`\`\`typescript
 const { ast, variables } = generateDocument({
-  query: { /* ... */ },
-  mutation: { /* ... */ },
-  subscription: { /* ... */ }
+query: { /_ ... _/ },
+mutation: { /_ ... _/ },
+subscription: { /_ ... _/ }
 });
 \`\`\`
 
@@ -830,14 +859,14 @@ Automatically extract and track variables:
 
 \`\`\`typescript
 const result = generateDocument({
-  query: {
-    user: {
-      args: {
-        id: { $var: 'userId', type: 'ID!', default: '123' }
-      },
-      select: { name: true }
-    }
-  }
+query: {
+user: {
+args: {
+id: { $var: 'userId', type: 'ID!', default: '123' }
+},
+select: { name: true }
+}
+}
 });
 
 // Variables extracted automatically
@@ -853,8 +882,8 @@ import { applyPlugins } from '@graphjson/core';
 import { relayPagination } from '@graphjson/presets';
 
 const transformed = applyPlugins(document, [
-  relayPagination(),
-  customPlugin()
+relayPagination(),
+customPlugin()
 ]);
 \`\`\`
 
@@ -865,11 +894,13 @@ const transformed = applyPlugins(document, [
 Generates a GraphQL document from JSON definition.
 
 **Parameters:**
+
 - `json.query` - Query operations
-- `json.mutation` - Mutation operations  
+- `json.mutation` - Mutation operations
 - `json.subscription` - Subscription operations
 
 **Returns:**
+
 - `ast`: GraphQL DocumentNode
 - `variables`: Record of variable values
 
@@ -878,6 +909,7 @@ Generates a GraphQL document from JSON definition.
 Applies transformation plugins to a document.
 
 **Parameters:**
+
 - `document`: GraphQL DocumentNode
 - `plugins`: Array of GraphJsonPlugin
 
@@ -887,10 +919,10 @@ Applies transformation plugins to a document.
 
 \`\`\`typescript
 import type {
-  JsonDocument,
-  JsonField,
-  JsonVariable,
-  GenerateResult
+JsonDocument,
+JsonField,
+JsonVariable,
+GenerateResult
 } from '@graphjson/core';
 \`\`\`
 
@@ -902,12 +934,12 @@ import type {
 
 ## Ecosystem
 
-| Package | Description |
-|---------|-------------|
+| Package                                                                  | Description                   |
+| ------------------------------------------------------------------------ | ----------------------------- |
 | [@graphjson/json-dsl](https://www.npmjs.com/package/@graphjson/json-dsl) | Type definitions for JSON DSL |
-| [@graphjson/ast](https://www.npmjs.com/package/@graphjson/ast) | AST building utilities |
-| [@graphjson/printer](https://www.npmjs.com/package/@graphjson/printer) | Print queries as strings |
-| [@graphjson/sdk](https://www.npmjs.com/package/@graphjson/sdk) | High-level SDK |
+| [@graphjson/ast](https://www.npmjs.com/package/@graphjson/ast)           | AST building utilities        |
+| [@graphjson/printer](https://www.npmjs.com/package/@graphjson/printer)   | Print queries as strings      |
+| [@graphjson/sdk](https://www.npmjs.com/package/@graphjson/sdk)           | High-level SDK                |
 
 ## Contributing
 
@@ -986,15 +1018,7 @@ NPM uses this for search and display:
 {
   "name": "@graphjson/core",
   "description": "Transform JSON queries into GraphQL documents",
-  "keywords": [
-    "graphql",
-    "json",
-    "query",
-    "ast",
-    "document",
-    "graphql-query",
-    "query-builder"
-  ],
+  "keywords": ["graphql", "json", "query", "ast", "document", "graphql-query", "query-builder"],
   "homepage": "https://github.com/NexaLeaf/graphjson#readme",
   "repository": {
     "type": "git",
@@ -1007,6 +1031,7 @@ NPM uses this for search and display:
 ### Keywords Strategy
 
 Choose 5-10 relevant keywords:
+
 - Primary technology (graphql, json)
 - Use case (query, builder, parser)
 - Related concepts (ast, document)
@@ -1060,6 +1085,7 @@ When making changes:
 ### Regular README Reviews
 
 Check quarterly:
+
 - [ ] Examples still work with current API
 - [ ] Links not broken
 - [ ] Badges still relevant

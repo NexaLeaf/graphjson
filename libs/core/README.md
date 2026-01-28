@@ -32,15 +32,15 @@ const { ast, variables } = generateDocument({
   query: {
     users: {
       args: {
-        limit: { $var: 'limit', type: 'Int!', default: 10 }
+        limit: { $var: 'limit', type: 'Int!', default: 10 },
       },
       select: {
         id: true,
         name: true,
-        email: true
-      }
-    }
-  }
+        email: true,
+      },
+    },
+  },
 });
 
 // Print the generated GraphQL query
@@ -66,13 +66,20 @@ Convert JSON to GraphQL DocumentNode:
 
 ```typescript
 const { ast, variables } = generateDocument({
-  query: { /* ... */ },
-  mutation: { /* ... */ },
-  subscription: { /* ... */ }
+  query: {
+    /* ... */
+  },
+  mutation: {
+    /* ... */
+  },
+  subscription: {
+    /* ... */
+  },
 });
 ```
 
 **Supports:**
+
 - Query, Mutation, and Subscription operations
 - Nested field selections
 - Arguments and variables
@@ -87,14 +94,14 @@ const result = generateDocument({
   query: {
     user: {
       args: {
-        id: { $var: 'userId', type: 'ID!', default: '123' }
+        id: { $var: 'userId', type: 'ID!', default: '123' },
       },
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 });
 
 // Variables extracted automatically
@@ -102,6 +109,7 @@ console.log(result.variables); // { userId: '123' }
 ```
 
 **Variable Features:**
+
 - Automatic extraction from `$var` syntax
 - Type definitions (ID!, String, Int, Boolean, etc.)
 - Default values
@@ -115,13 +123,11 @@ Transform documents with reusable plugins:
 import { applyPlugins } from '@graphjson/core';
 import { relayPagination } from '@graphjson/presets';
 
-const transformed = applyPlugins(document, [
-  relayPagination(),
-  customPlugin()
-]);
+const transformed = applyPlugins(document, [relayPagination(), customPlugin()]);
 ```
 
 **Plugin Capabilities:**
+
 - Transform entire document
 - Modify individual fields
 - Add pagination structures
@@ -136,16 +142,16 @@ Generates a GraphQL document from JSON definition.
 
 **Parameters:**
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `json` | `JsonDocument` | JSON query definition with query/mutation/subscription |
+| Parameter | Type           | Description                                            |
+| --------- | -------------- | ------------------------------------------------------ |
+| `json`    | `JsonDocument` | JSON query definition with query/mutation/subscription |
 
 **Returns:** `GenerateResult` object containing:
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `ast` | `DocumentNode` | GraphQL AST (use with GraphQL clients) |
-| `variables` | `Record<string, any>` | Extracted variable values |
+| Property    | Type                  | Description                            |
+| ----------- | --------------------- | -------------------------------------- |
+| `ast`       | `DocumentNode`        | GraphQL AST (use with GraphQL clients) |
+| `variables` | `Record<string, any>` | Extracted variable values              |
 
 **Example:**
 
@@ -156,10 +162,10 @@ const { ast, variables } = generateDocument({
       args: { first: 10 },
       select: {
         id: true,
-        title: true
-      }
-    }
-  }
+        title: true,
+      },
+    },
+  },
 });
 ```
 
@@ -169,10 +175,10 @@ Applies transformation plugins to a GraphQL document.
 
 **Parameters:**
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `document` | `DocumentNode` | GraphQL AST to transform |
-| `plugins` | `GraphJsonPlugin[]` | Array of plugins to apply |
+| Parameter  | Type                | Description               |
+| ---------- | ------------------- | ------------------------- |
+| `document` | `DocumentNode`      | GraphQL AST to transform  |
+| `plugins`  | `GraphJsonPlugin[]` | Array of plugins to apply |
 
 **Returns:** `DocumentNode` - Transformed GraphQL AST
 
@@ -182,9 +188,7 @@ Applies transformation plugins to a GraphQL document.
 import { applyPlugins } from '@graphjson/core';
 import { relayPagination } from '@graphjson/presets';
 
-const transformed = applyPlugins(document, [
-  relayPagination()
-]);
+const transformed = applyPlugins(document, [relayPagination()]);
 ```
 
 ## Usage Examples
@@ -199,10 +203,10 @@ const { ast, variables } = generateDocument({
     users: {
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 });
 ```
 
@@ -213,20 +217,20 @@ const { ast, variables } = generateDocument({
   query: {
     user: {
       args: {
-        id: { $var: 'userId', type: 'ID!' }
+        id: { $var: 'userId', type: 'ID!' },
       },
       select: {
         id: true,
-        email: true
-      }
-    }
-  }
+        email: true,
+      },
+    },
+  },
 });
 
 // Use with GraphQL client
 const result = await client.request(ast, {
   ...variables,
-  userId: 'user-123'  // Override variable
+  userId: 'user-123', // Override variable
 });
 ```
 
@@ -250,14 +254,14 @@ const { ast, variables } = generateDocument({
               select: {
                 id: true,
                 firstName: true,
-                lastName: true
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+                lastName: true,
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 });
 ```
 
@@ -267,20 +271,20 @@ const { ast, variables } = generateDocument({
 const { ast, variables } = generateDocument({
   query: {
     users: {
-      select: { id: true, name: true }
-    }
+      select: { id: true, name: true },
+    },
   },
   mutation: {
     createUser: {
       args: {
-        input: { $var: 'userInput', type: 'UserInput!' }
+        input: { $var: 'userInput', type: 'UserInput!' },
       },
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 });
 ```
 
@@ -297,10 +301,10 @@ const { ast } = generateDocument({
       args: { first: 20 },
       select: {
         id: true,
-        title: true
-      }
-    }
-  }
+        title: true,
+      },
+    },
+  },
 });
 
 // Apply Relay pagination transformation
@@ -316,12 +320,7 @@ Full TypeScript definitions included for type-safe development.
 ### Import Types
 
 ```typescript
-import type {
-  JsonDocument,
-  JsonField,
-  JsonVariable,
-  GenerateResult
-} from '@graphjson/core';
+import type { JsonDocument, JsonField, JsonVariable, GenerateResult } from '@graphjson/core';
 ```
 
 ### Type Definitions
@@ -360,14 +359,14 @@ const query: JsonDocument = {
   query: {
     users: {
       args: {
-        limit: { $var: 'limit', type: 'Int!', default: 10 }
+        limit: { $var: 'limit', type: 'Int!', default: 10 },
       },
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 };
 
 const result = generateDocument(query);
@@ -383,14 +382,14 @@ import { generateDocument } from '@graphjson/core';
 
 const client = new ApolloClient({
   uri: 'https://api.example.com/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 const { ast, variables } = generateDocument(myQuery);
 
 const result = await client.query({
   query: ast,
-  variables
+  variables,
 });
 ```
 
@@ -401,7 +400,7 @@ import { createClient } from 'urql';
 import { generateDocument } from '@graphjson/core';
 
 const client = createClient({
-  url: 'https://api.example.com/graphql'
+  url: 'https://api.example.com/graphql',
 });
 
 const { ast, variables } = generateDocument(myQuery);
@@ -432,14 +431,15 @@ const { ast } = generateDocument({
     users: {
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 });
 ```
 
 Generates:
+
 ```graphql
 query {
   users {
@@ -455,17 +455,18 @@ query {
 const { ast } = generateDocument({
   query: {
     user: {
-      args: { id: "123" },
+      args: { id: '123' },
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 });
 ```
 
 Generates:
+
 ```graphql
 query {
   user(id: "123") {
@@ -483,20 +484,21 @@ const { ast, variables } = generateDocument({
     users: {
       args: {
         limit: { $var: 'pageSize', type: 'Int!', default: 20 },
-        offset: { $var: 'offset', type: 'Int', default: 0 }
+        offset: { $var: 'offset', type: 'Int', default: 0 },
       },
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 });
 ```
 
 Generates:
+
 ```graphql
-query($pageSize: Int!, $offset: Int) {
+query ($pageSize: Int!, $offset: Int) {
   users(limit: $pageSize, offset: $offset) {
     id
     name
@@ -505,6 +507,7 @@ query($pageSize: Int!, $offset: Int) {
 ```
 
 With variables:
+
 ```json
 {
   "pageSize": 20,
@@ -516,15 +519,15 @@ With variables:
 
 This package is part of the GraphJSON ecosystem:
 
-| Package | Description | NPM |
-|---------|-------------|-----|
-| [@graphjson/json-dsl](https://github.com/NexaLeaf/graphjson/tree/main/libs/json-dsl) | JSON DSL type definitions | [![npm](https://img.shields.io/npm/v/@graphjson/json-dsl)](https://www.npmjs.com/package/@graphjson/json-dsl) |
-| [@graphjson/ast](https://github.com/NexaLeaf/graphjson/tree/main/libs/ast) | AST building utilities | [![npm](https://img.shields.io/npm/v/@graphjson/ast)](https://www.npmjs.com/package/@graphjson/ast) |
-| [@graphjson/printer](https://github.com/NexaLeaf/graphjson/tree/main/libs/printer) | Query string printer | [![npm](https://img.shields.io/npm/v/@graphjson/printer)](https://www.npmjs.com/package/@graphjson/printer) |
-| [@graphjson/plugins](https://github.com/NexaLeaf/graphjson/tree/main/libs/plugins) | Plugin system types | [![npm](https://img.shields.io/npm/v/@graphjson/plugins)](https://www.npmjs.com/package/@graphjson/plugins) |
-| [@graphjson/presets](https://github.com/NexaLeaf/graphjson/tree/main/libs/presets) | Common presets (Relay, etc.) | [![npm](https://img.shields.io/npm/v/@graphjson/presets)](https://www.npmjs.com/package/@graphjson/presets) |
-| [@graphjson/sdk](https://github.com/NexaLeaf/graphjson/tree/main/libs/sdk) | High-level type-safe SDK | [![npm](https://img.shields.io/npm/v/@graphjson/sdk)](https://www.npmjs.com/package/@graphjson/sdk) |
-| [@graphjson/schema](https://github.com/NexaLeaf/graphjson/tree/main/libs/schema) | Schema validation | [![npm](https://img.shields.io/npm/v/@graphjson/schema)](https://www.npmjs.com/package/@graphjson/schema) |
+| Package                                                                              | Description                  | NPM                                                                                                           |
+| ------------------------------------------------------------------------------------ | ---------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| [@graphjson/json-dsl](https://github.com/NexaLeaf/graphjson/tree/main/libs/json-dsl) | JSON DSL type definitions    | [![npm](https://img.shields.io/npm/v/@graphjson/json-dsl)](https://www.npmjs.com/package/@graphjson/json-dsl) |
+| [@graphjson/ast](https://github.com/NexaLeaf/graphjson/tree/main/libs/ast)           | AST building utilities       | [![npm](https://img.shields.io/npm/v/@graphjson/ast)](https://www.npmjs.com/package/@graphjson/ast)           |
+| [@graphjson/printer](https://github.com/NexaLeaf/graphjson/tree/main/libs/printer)   | Query string printer         | [![npm](https://img.shields.io/npm/v/@graphjson/printer)](https://www.npmjs.com/package/@graphjson/printer)   |
+| [@graphjson/plugins](https://github.com/NexaLeaf/graphjson/tree/main/libs/plugins)   | Plugin system types          | [![npm](https://img.shields.io/npm/v/@graphjson/plugins)](https://www.npmjs.com/package/@graphjson/plugins)   |
+| [@graphjson/presets](https://github.com/NexaLeaf/graphjson/tree/main/libs/presets)   | Common presets (Relay, etc.) | [![npm](https://img.shields.io/npm/v/@graphjson/presets)](https://www.npmjs.com/package/@graphjson/presets)   |
+| [@graphjson/sdk](https://github.com/NexaLeaf/graphjson/tree/main/libs/sdk)           | High-level type-safe SDK     | [![npm](https://img.shields.io/npm/v/@graphjson/sdk)](https://www.npmjs.com/package/@graphjson/sdk)           |
+| [@graphjson/schema](https://github.com/NexaLeaf/graphjson/tree/main/libs/schema)     | Schema validation            | [![npm](https://img.shields.io/npm/v/@graphjson/schema)](https://www.npmjs.com/package/@graphjson/schema)     |
 
 ## Examples
 

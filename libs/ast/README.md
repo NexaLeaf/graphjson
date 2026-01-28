@@ -32,8 +32,8 @@ const field: JsonField = {
   args: { id: '123' },
   select: {
     id: true,
-    name: true
-  }
+    name: true,
+  },
 };
 
 const variables = new Map();
@@ -50,10 +50,10 @@ Builds a GraphQL FieldNode from a JSON field definition.
 
 **Parameters:**
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `name` | `string` | Field name |
-| `field` | `JsonField` | JSON field definition |
+| Parameter    | Type         | Description                      |
+| ------------ | ------------ | -------------------------------- |
+| `name`       | `string`     | Field name                       |
+| `field`      | `JsonField`  | JSON field definition            |
 | `collectVar` | `CollectVar` | Callback for variable collection |
 
 **Returns:** `FieldNode` - GraphQL AST field node
@@ -61,13 +61,17 @@ Builds a GraphQL FieldNode from a JSON field definition.
 **Example:**
 
 ```typescript
-const fieldNode = buildFieldNode('users', {
-  args: { limit: 10 },
-  select: {
-    id: true,
-    name: true
-  }
-}, collectVar);
+const fieldNode = buildFieldNode(
+  'users',
+  {
+    args: { limit: 10 },
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+  collectVar
+);
 ```
 
 ## Usage
@@ -80,12 +84,16 @@ import { buildFieldNode } from '@graphjson/ast';
 const vars = new Map();
 const collectVar = (name, v) => vars.set(name, v);
 
-const node = buildFieldNode('user', {
-  select: {
-    id: true,
-    name: true
-  }
-}, collectVar);
+const node = buildFieldNode(
+  'user',
+  {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+  collectVar
+);
 
 // Result: FieldNode for { id, name }
 ```
@@ -93,16 +101,20 @@ const node = buildFieldNode('user', {
 ### With Arguments
 
 ```typescript
-const node = buildFieldNode('users', {
-  args: {
-    limit: 10,
-    offset: 0
+const node = buildFieldNode(
+  'users',
+  {
+    args: {
+      limit: 10,
+      offset: 0,
+    },
+    select: {
+      id: true,
+      name: true,
+    },
   },
-  select: {
-    id: true,
-    name: true
-  }
-}, collectVar);
+  collectVar
+);
 
 // Result: users(limit: 10, offset: 0) { id, name }
 ```
@@ -110,15 +122,19 @@ const node = buildFieldNode('users', {
 ### With Variables
 
 ```typescript
-const node = buildFieldNode('user', {
-  args: {
-    id: { $var: 'userId', type: 'ID!' }
+const node = buildFieldNode(
+  'user',
+  {
+    args: {
+      id: { $var: 'userId', type: 'ID!' },
+    },
+    select: {
+      id: true,
+      name: true,
+    },
   },
-  select: {
-    id: true,
-    name: true
-  }
-}, collectVar);
+  collectVar
+);
 
 // collectVar will be called with ('userId', { $var: 'userId', type: 'ID!' })
 // Result: user(id: $userId) { id, name }
@@ -127,18 +143,22 @@ const node = buildFieldNode('user', {
 ### Nested Fields
 
 ```typescript
-const node = buildFieldNode('user', {
-  select: {
-    id: true,
-    posts: {
-      args: { first: 10 },
-      select: {
-        title: true,
-        content: true
-      }
-    }
-  }
-}, collectVar);
+const node = buildFieldNode(
+  'user',
+  {
+    select: {
+      id: true,
+      posts: {
+        args: { first: 10 },
+        select: {
+          title: true,
+          content: true,
+        },
+      },
+    },
+  },
+  collectVar
+);
 ```
 
 ## Advanced Usage
@@ -156,7 +176,7 @@ const transformed = visit(fieldNode, {
   Field(node) {
     // Custom transformation logic
     return modifiedNode;
-  }
+  },
 });
 ```
 
@@ -189,11 +209,11 @@ function buildCustomField(name: string, field: JsonField): FieldNode {
 
 ## GraphJSON Ecosystem
 
-| Package | Description | NPM |
-|---------|-------------|-----|
-| [@graphjson/json-dsl](https://www.npmjs.com/package/@graphjson/json-dsl) | Type definitions | [![npm](https://img.shields.io/npm/v/@graphjson/json-dsl)](https://www.npmjs.com/package/@graphjson/json-dsl) |
-| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core) | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core) |
-| [@graphjson/printer](https://www.npmjs.com/package/@graphjson/printer) | Query printer | [![npm](https://img.shields.io/npm/v/@graphjson/printer)](https://www.npmjs.com/package/@graphjson/printer) |
+| Package                                                                  | Description              | NPM                                                                                                           |
+| ------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| [@graphjson/json-dsl](https://www.npmjs.com/package/@graphjson/json-dsl) | Type definitions         | [![npm](https://img.shields.io/npm/v/@graphjson/json-dsl)](https://www.npmjs.com/package/@graphjson/json-dsl) |
+| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core)         | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core)         |
+| [@graphjson/printer](https://www.npmjs.com/package/@graphjson/printer)   | Query printer            | [![npm](https://img.shields.io/npm/v/@graphjson/printer)](https://www.npmjs.com/package/@graphjson/printer)   |
 
 ## Contributing
 

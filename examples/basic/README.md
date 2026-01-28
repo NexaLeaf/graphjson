@@ -37,11 +37,14 @@ This JSON represents a simple GraphQL query that fetches all users with their `i
 
 ```json
 {
-  "query": {              // ← Query operation
-    "users": {            // ← Root field
-      "select": {         // ← Field selection
-        "id": true,       // ← Select id field
-        "name": true      // ← Select name field
+  "query": {
+    // ← Query operation
+    "users": {
+      // ← Root field
+      "select": {
+        // ← Field selection
+        "id": true, // ← Select id field
+        "name": true // ← Select name field
       }
     }
   }
@@ -102,16 +105,14 @@ import { print } from 'graphql';
 import { generateDocument } from '@graphjson/core';
 
 // Read the JSON query file
-const json = JSON.parse(
-  readFileSync(join(__dirname, 'query.json'), 'utf-8')
-);
+const json = JSON.parse(readFileSync(join(__dirname, 'query.json'), 'utf-8'));
 
 // Generate GraphQL document
 const { ast, variables } = generateDocument(json);
 
 // Print the result
-console.log(print(ast));        // GraphQL query string
-console.log('variables:', variables);  // Empty object (no variables)
+console.log(print(ast)); // GraphQL query string
+console.log('variables:', variables); // Empty object (no variables)
 ```
 
 ## Key Concepts
@@ -123,8 +124,8 @@ In GraphJSON, you select fields using an object:
 ```json
 {
   "select": {
-    "field1": true,    // Include this field
-    "field2": true     // Include this field
+    "field1": true, // Include this field
+    "field2": true // Include this field
   }
 }
 ```
@@ -144,9 +145,15 @@ Every GraphJSON query needs a root operation type:
 
 ```json
 {
-  "query": { /* ... */ },      // Query operation
-  "mutation": { /* ... */ },   // Mutation operation (optional)
-  "subscription": { /* ... */ } // Subscription operation (optional)
+  "query": {
+    /* ... */
+  }, // Query operation
+  "mutation": {
+    /* ... */
+  }, // Mutation operation (optional)
+  "subscription": {
+    /* ... */
+  } // Subscription operation (optional)
 }
 ```
 
@@ -163,8 +170,8 @@ Edit `query.json` to add more fields:
       "select": {
         "id": true,
         "name": true,
-        "email": true,        // Add this
-        "createdAt": true     // And this
+        "email": true, // Add this
+        "createdAt": true // And this
       }
     }
   }
@@ -172,6 +179,7 @@ Edit `query.json` to add more fields:
 ```
 
 Run again:
+
 ```bash
 npx nx run basic:run
 ```
@@ -187,7 +195,8 @@ npx nx run basic:run
         "name": true
       }
     },
-    "posts": {               // Add this
+    "posts": {
+      // Add this
       "select": {
         "id": true,
         "title": true

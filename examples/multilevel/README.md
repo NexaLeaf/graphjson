@@ -76,7 +76,7 @@ npx nx run multilevel:run
 ## Expected Output
 
 ```graphql
-query($employeeCursor: String) {
+query ($employeeCursor: String) {
   companies(first: 5) {
     id
     name
@@ -103,28 +103,37 @@ query($employeeCursor: String) {
 ### Level-by-Level Breakdown
 
 #### Level 1: Companies
+
 ```json
 {
   "companies": {
     "args": { "first": 5 },
-    "select": { /* ... */ }
+    "select": {
+      /* ... */
+    }
   }
 }
 ```
+
 Fetches first 5 companies.
 
 #### Level 2: Departments
+
 ```json
 {
   "departments": {
     "args": { "first": 3 },
-    "select": { /* ... */ }
+    "select": {
+      /* ... */
+    }
   }
 }
 ```
+
 For each company, fetches first 3 departments.
 
 #### Level 3: Employees
+
 ```json
 {
   "employees": {
@@ -132,13 +141,17 @@ For each company, fetches first 3 departments.
       "first": 10,
       "after": { "$var": "employeeCursor", "type": "String" }
     },
-    "select": { /* ... */ }
+    "select": {
+      /* ... */
+    }
   }
 }
 ```
+
 For each department, fetches first 10 employees with cursor support.
 
 #### Level 4: Projects
+
 ```json
 {
   "projects": {
@@ -151,6 +164,7 @@ For each department, fetches first 10 employees with cursor support.
   }
 }
 ```
+
 For each employee, fetches active projects.
 
 ## Key Patterns
@@ -164,7 +178,8 @@ To nest a field, add it inside the parent's `select`:
   "parent": {
     "select": {
       "id": true,
-      "child": {           // ← Nested field
+      "child": {
+        // ← Nested field
         "select": {
           "id": true
         }
@@ -185,7 +200,9 @@ Each level can have its own arguments:
     "select": {
       "level2": {
         "args": { "filter": "value2" },
-        "select": { /* ... */ }
+        "select": {
+          /* ... */
+        }
       }
     }
   }
@@ -197,8 +214,8 @@ Each level can have its own arguments:
 ```json
 {
   "args": {
-    "first": 10,                                      // Static
-    "after": { "$var": "cursor", "type": "String" }   // Variable
+    "first": 10, // Static
+    "after": { "$var": "cursor", "type": "String" } // Variable
   }
 }
 ```
@@ -284,8 +301,8 @@ Be careful with deep nesting - it can impact performance:
 ```json
 {
   "args": {
-    "first": 5,    // ← Limit results at each level
-    "maxDepth": 4  // ← Some APIs support depth limits
+    "first": 5, // ← Limit results at each level
+    "maxDepth": 4 // ← Some APIs support depth limits
   }
 }
 ```
@@ -310,7 +327,7 @@ Only fetch fields you need:
 ✅ **Use pagination** - Limit results at each level  
 ✅ **Select only needed fields** - Avoid over-fetching  
 ✅ **Consider fragments** - Reuse common selections  
-✅ **Test performance** - Monitor query execution time  
+✅ **Test performance** - Monitor query execution time
 
 ## Next Steps
 

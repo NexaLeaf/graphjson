@@ -23,11 +23,13 @@ npx nx run pagination:run
 The simplest possible example showing how to convert a JSON query to GraphQL.
 
 **What it demonstrates:**
+
 - Basic query structure
 - Field selection
 - Document generation
 
 **Run it:**
+
 ```bash
 npx nx run basic:run
 ```
@@ -41,12 +43,14 @@ npx nx run basic:run
 Shows how to use variables in your queries for dynamic values.
 
 **What it demonstrates:**
+
 - Variable declaration with `$var`
 - Variable types
 - Default values
 - Variable extraction
 
 **Run it:**
+
 ```bash
 npx nx run variables:run
 ```
@@ -60,12 +64,14 @@ npx nx run variables:run
 Demonstrates deep nesting and complex query structures.
 
 **What it demonstrates:**
+
 - Multiple levels of nesting (4+ levels deep)
 - Parent-child relationships
 - Arguments at each level
 - Complex data fetching
 
 **Run it:**
+
 ```bash
 npx nx run multilevel:run
 ```
@@ -79,6 +85,7 @@ npx nx run multilevel:run
 Shows the high-level SDK with all advanced features.
 
 **What it demonstrates:**
+
 - SDK query builder
 - Pagination (Relay-style)
 - Field aliases
@@ -87,6 +94,7 @@ Shows the high-level SDK with all advanced features.
 - All features combined
 
 **Run it:**
+
 ```bash
 npx nx run advanced:run
 ```
@@ -100,12 +108,14 @@ npx nx run advanced:run
 Demonstrates Relay-style pagination patterns.
 
 **What it demonstrates:**
+
 - Relay pagination preset
 - Edges and nodes structure
 - PageInfo handling
 - Cursor-based pagination
 
 **Run it:**
+
 ```bash
 npx nx run pagination:run
 ```
@@ -175,6 +185,7 @@ All examples output:
 2. **Variables** - Extracted variable values (if any)
 
 Example output:
+
 ```
 --- GraphQL ---
 
@@ -207,7 +218,7 @@ import { query, field, variable } from '@graphjson/sdk';
 const input = query({
   users: field()
     .args({ limit: variable('limit', 'Int!', 10) })
-    .select({ id: true, name: true })
+    .select({ id: true, name: true }),
 });
 ```
 

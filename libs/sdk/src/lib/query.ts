@@ -3,17 +3,14 @@ import type {
   JsonField,
   JsonArg,
   JsonVariable,
-  JsonValue
+  JsonValue,
 } from '@graphjson/json-dsl';
 
 /* ------------------------------
  * Internal helper types
  * ------------------------------ */
 
-type Selection =
-  | true
-  | FieldBuilder
-  | { [fragment: `...${string}`]: true };
+type Selection = true | FieldBuilder | { [fragment: `...${string}`]: true };
 
 type DirectiveArgs = Record<string, JsonArg>;
 
@@ -29,7 +26,7 @@ export function variable<T extends JsonValue = JsonValue>(
   return {
     $var: name,
     type,
-    default: defaultValue
+    default: defaultValue,
   };
 }
 
@@ -79,9 +76,7 @@ export class FieldBuilder {
 
   /* ---------- pagination intent ---------- */
 
-  paginate(
-    mode: 'relay' | 'cursor' | 'offset' = 'relay'
-  ) {
+  paginate(mode: 'relay' | 'cursor' | 'offset' = 'relay') {
     (this.field as any).paginate = mode;
     return this;
   }
@@ -101,7 +96,7 @@ export class FieldBuilder {
 
     return {
       ...this.field,
-      alias: this.aliasName
+      alias: this.aliasName,
     } as JsonField;
   }
 
@@ -124,32 +119,20 @@ export function field() {
  * Operation Builders
  * ------------------------------ */
 
-export function query(
-  fields: Record<string, FieldBuilder>
-): JsonDocument {
+export function query(fields: Record<string, FieldBuilder>): JsonDocument {
   return {
-    query: Object.fromEntries(
-      Object.entries(fields).map(([k, v]) => [k, v.build()])
-    )
+    query: Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, v.build()])),
   };
 }
 
-export function mutation(
-  fields: Record<string, FieldBuilder>
-): JsonDocument {
+export function mutation(fields: Record<string, FieldBuilder>): JsonDocument {
   return {
-    mutation: Object.fromEntries(
-      Object.entries(fields).map(([k, v]) => [k, v.build()])
-    )
+    mutation: Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, v.build()])),
   };
 }
 
-export function subscription(
-  fields: Record<string, FieldBuilder>
-): JsonDocument {
+export function subscription(fields: Record<string, FieldBuilder>): JsonDocument {
   return {
-    subscription: Object.fromEntries(
-      Object.entries(fields).map(([k, v]) => [k, v.build()])
-    )
+    subscription: Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, v.build()])),
   };
 }

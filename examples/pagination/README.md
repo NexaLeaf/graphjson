@@ -45,7 +45,7 @@ npx nx run pagination:run
 ## Expected Output
 
 ```graphql
-query($cursor: String) {
+query ($cursor: String) {
   users(first: 10, after: $cursor) {
     id
     name
@@ -55,6 +55,7 @@ query($cursor: String) {
 ```
 
 Variables:
+
 ```json
 {
   "cursor": undefined
@@ -66,6 +67,7 @@ Variables:
 ### Basic Concept
 
 Cursor-based pagination uses:
+
 - **`first`** - Number of items to fetch
 - **`after`** - Cursor pointing to where to start
 
@@ -83,20 +85,24 @@ Page 3: first: 10, after: "def456"
 ### Advantages Over Offset Pagination
 
 **Cursor-based** (this example):
+
 ```graphql
 users(first: 10, after: "cursor123")
 ```
+
 ✅ Stable - Items won't be skipped if data changes  
 ✅ Efficient - Database can optimize lookups  
-✅ Scalable - Works with large datasets  
+✅ Scalable - Works with large datasets
 
 **Offset-based** (traditional):
+
 ```graphql
 users(limit: 10, offset: 20)
 ```
+
 ❌ Unstable - Can skip/duplicate items if data changes  
 ❌ Slow - Full table scan on large offsets  
-❌ Problematic with real-time data  
+❌ Problematic with real-time data
 
 ## Relay Pagination Pattern
 
@@ -105,14 +111,17 @@ For Relay-compliant APIs, queries typically return:
 ```graphql
 {
   users(first: 10, after: $cursor) {
-    edges {           # ← Array of edges
-      node {          # ← The actual item
+    edges {
+      # ← Array of edges
+      node {
+        # ← The actual item
         id
         name
       }
-      cursor        # ← Cursor for this item
+      cursor # ← Cursor for this item
     }
-    pageInfo {        # ← Pagination metadata
+    pageInfo {
+      # ← Pagination metadata
       hasNextPage
       hasPreviousPage
       startCursor
@@ -142,13 +151,13 @@ import { query, field } from '@graphjson/sdk';
 
 query({
   users: field()
-    .paginate('relay')     // ← Automatically adds edges/pageInfo
+    .paginate('relay') // ← Automatically adds edges/pageInfo
     .args({ first: 10 })
     .select({
       id: true,
-      name: true
-    })
-})
+      name: true,
+    }),
+});
 ```
 
 ## Pagination Patterns
@@ -246,18 +255,18 @@ const { ast, variables } = generateDocument(query);
 
 const response = await client.request(ast, {
   ...variables,
-  cursor: null  // First page
+  cursor: null, // First page
 });
 
 // Access data
-const posts = response.posts.edges.map(edge => edge.node);
+const posts = response.posts.edges.map((edge) => edge.node);
 const pageInfo = response.posts.pageInfo;
 
 // Check if there are more pages
 if (pageInfo.hasNextPage) {
   // Fetch next page
   const nextPage = await client.request(ast, {
-    cursor: pageInfo.endCursor
+    cursor: pageInfo.endCursor,
   });
 }
 ```
@@ -273,22 +282,22 @@ import { generateDocument } from '@graphjson/core';
 function usePagination(query, pageSize = 10) {
   const [cursor, setCursor] = useState(null);
   const [hasMore, setHasMore] = useState(true);
-  
+
   const { ast, variables } = generateDocument(query);
-  
+
   const loadMore = async () => {
     const result = await client.request(ast, {
       ...variables,
       pageSize,
-      cursor
+      cursor,
     });
-    
+
     setCursor(result.posts.pageInfo.endCursor);
     setHasMore(result.posts.pageInfo.hasNextPage);
-    
-    return result.posts.edges.map(e => e.node);
+
+    return result.posts.edges.map((e) => e.node);
   };
-  
+
   return { loadMore, hasMore };
 }
 ```
@@ -299,7 +308,7 @@ function usePagination(query, pageSize = 10) {
 function InfiniteList() {
   const { loadMore, hasMore } = usePagination(postsQuery);
   const [items, setItems] = useState([]);
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(async (entries) => {
       if (entries[0].isIntersecting && hasMore) {
@@ -307,11 +316,11 @@ function InfiniteList() {
         setItems(prev => [...prev, ...newItems]);
       }
     });
-    
+
     observer.observe(loaderRef.current);
     return () => observer.disconnect();
   }, [hasMore]);
-  
+
   return (
     <div>
       {items.map(item => <Item key={item.id} {...item} />)}
@@ -332,6 +341,7 @@ function InfiniteList() {
 ```
 
 Recommended sizes:
+
 - **Lists**: 20-50 items
 - **Cards/Grid**: 12-24 items
 - **Tables**: 50-100 items
@@ -342,11 +352,13 @@ Recommended sizes:
 ```json
 {
   "select": {
-    "edges": { /* ... */ },
+    "edges": {
+      /* ... */
+    },
     "pageInfo": {
       "select": {
-        "hasNextPage": true,    // ← Essential
-        "endCursor": true        // ← For next page
+        "hasNextPage": true, // ← Essential
+        "endCursor": true // ← For next page
       }
     }
   }
@@ -366,7 +378,7 @@ if (result.posts.edges.length === 0) {
 ```typescript
 const cursors = {
   current: null,
-  previous: []
+  previous: [],
 };
 
 // When loading next page
@@ -388,8 +400,10 @@ cursors.current = cursors.previous.pop();
 ```json
 {
   "select": {
-    "edges": { /* ... */ },
-    "pageInfo": { 
+    "edges": {
+      /* ... */
+    },
+    "pageInfo": {
       "select": { "hasNextPage": true, "endCursor": true }
     }
   }

@@ -1,9 +1,4 @@
-import {
-  DocumentNode,
-  FieldNode,
-  Kind,
-  visit
-} from 'graphql';
+import { DocumentNode, FieldNode, Kind, visit } from 'graphql';
 
 /**
  * Rewrites Relay connections:
@@ -27,8 +22,8 @@ export function relayPaginationPreset(
         name: { kind: Kind.NAME, value: 'node' },
         selectionSet: {
           kind: Kind.SELECTION_SET,
-          selections: originalSelections
-        }
+          selections: originalSelections,
+        },
       };
 
       const edgesField: FieldNode = {
@@ -36,8 +31,8 @@ export function relayPaginationPreset(
         name: { kind: Kind.NAME, value: 'edges' },
         selectionSet: {
           kind: Kind.SELECTION_SET,
-          selections: [nodeField]
-        }
+          selections: [nodeField],
+        },
       };
 
       const pageInfoField: FieldNode = {
@@ -49,18 +44,18 @@ export function relayPaginationPreset(
             { kind: Kind.FIELD, name: { kind: Kind.NAME, value: 'hasNextPage' } },
             { kind: Kind.FIELD, name: { kind: Kind.NAME, value: 'hasPreviousPage' } },
             { kind: Kind.FIELD, name: { kind: Kind.NAME, value: 'startCursor' } },
-            { kind: Kind.FIELD, name: { kind: Kind.NAME, value: 'endCursor' } }
-          ]
-        }
+            { kind: Kind.FIELD, name: { kind: Kind.NAME, value: 'endCursor' } },
+          ],
+        },
       };
 
       return {
         ...node,
         selectionSet: {
           kind: Kind.SELECTION_SET,
-          selections: [edgesField, pageInfoField]
-        }
+          selections: [edgesField, pageInfoField],
+        },
       };
-    }
+    },
   });
 }

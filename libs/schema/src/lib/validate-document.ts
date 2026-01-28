@@ -13,10 +13,7 @@ export interface ValidationResult {
   errors: GraphQLError[];
 }
 
-export function validateDocument(
-  schema: GraphQLSchema,
-  document: DocumentNode
-): ValidationResult {
+export function validateDocument(schema: GraphQLSchema, document: DocumentNode): ValidationResult {
   const errors: GraphQLError[] = [];
   const typeInfo = new TypeInfo(schema);
 
@@ -26,23 +23,13 @@ export function validateDocument(
       Field(node: FieldNode) {
         const fieldDef = typeInfo.getFieldDef();
         if (!fieldDef) {
-          errors.push(
-            new GraphQLError(
-              `Unknown field "${node.name.value}"`,
-              node
-            )
-          );
+          errors.push(new GraphQLError(`Unknown field "${node.name.value}"`, node));
         }
       },
       Argument(node: ArgumentNode) {
         const argDef = typeInfo.getArgument();
         if (!argDef) {
-          errors.push(
-            new GraphQLError(
-              `Unknown argument "${node.name.value}"`,
-              node
-            )
-          );
+          errors.push(new GraphQLError(`Unknown argument "${node.name.value}"`, node));
         }
       },
     })

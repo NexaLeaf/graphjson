@@ -32,13 +32,13 @@ const myQuery = query({
   users: field()
     .args({
       limit: variable('limit', 'Int!', 10),
-      search: variable('search', 'String')
+      search: variable('search', 'String'),
     })
     .select({
       id: true,
       name: true,
-      email: true
-    })
+      email: true,
+    }),
 });
 
 const { ast, variables } = generateDocument(myQuery);
@@ -59,12 +59,11 @@ const q = query({
     .select({
       id: true,
       title: true,
-      author: field()
-        .select({
-          name: true,
-          avatar: true
-        })
-    })
+      author: field().select({
+        name: true,
+        avatar: true,
+      }),
+    }),
 });
 ```
 
@@ -78,7 +77,7 @@ field()
   .select({ id: true, name: true })
   .alias('usersList')
   .directive('include', { if: true })
-  .paginate('relay')
+  .paginate('relay');
 ```
 
 ### 3. Variables
@@ -88,9 +87,9 @@ Type-safe variable creation:
 ```typescript
 import { variable } from '@graphjson/sdk';
 
-variable('userId', 'ID!')              // Required
-variable('limit', 'Int', 10)           // With default
-variable('filter', 'UserFilterInput')  // Optional
+variable('userId', 'ID!'); // Required
+variable('limit', 'Int', 10); // With default
+variable('filter', 'UserFilterInput'); // Optional
 ```
 
 ### 4. Pagination
@@ -99,9 +98,9 @@ Built-in pagination support:
 
 ```typescript
 field()
-  .paginate('relay')  // Adds edges/node/pageInfo
+  .paginate('relay') // Adds edges/node/pageInfo
   .args({ first: 20 })
-  .select({ id: true, title: true })
+  .select({ id: true, title: true });
 ```
 
 ### 5. Where Helpers
@@ -114,7 +113,7 @@ import { where, eq, gt, and, or } from '@graphjson/sdk';
 const filters = where({
   age: gt(18),
   status: eq('active'),
-  role: or(['admin', 'moderator'])
+  role: or(['admin', 'moderator']),
 });
 ```
 
@@ -127,8 +126,8 @@ Creates a query operation.
 ```typescript
 query({
   users: field().select({ id: true }),
-  posts: field().select({ title: true })
-})
+  posts: field().select({ title: true }),
+});
 ```
 
 ### `mutation(fields: Record<string, Field>): JsonDocument`
@@ -139,8 +138,8 @@ Creates a mutation operation.
 mutation({
   createUser: field()
     .args({ input: variable('user', 'UserInput!') })
-    .select({ id: true, name: true })
-})
+    .select({ id: true, name: true }),
+});
 ```
 
 ### `field(): FieldBuilder`
@@ -149,21 +148,21 @@ Creates a field builder with chainable methods.
 
 **Methods:**
 
-| Method | Description |
-|--------|-------------|
-| `.args(obj)` | Add field arguments |
-| `.select(obj)` | Select subfields |
-| `.alias(name)` | Set field alias |
-| `.directive(name, args)` | Add directive |
-| `.paginate(style)` | Add pagination |
+| Method                   | Description         |
+| ------------------------ | ------------------- |
+| `.args(obj)`             | Add field arguments |
+| `.select(obj)`           | Select subfields    |
+| `.alias(name)`           | Set field alias     |
+| `.directive(name, args)` | Add directive       |
+| `.paginate(style)`       | Add pagination      |
 
 ### `variable(name: string, type: string, defaultValue?: any): JsonVariable`
 
 Creates a GraphQL variable reference.
 
 ```typescript
-variable('userId', 'ID!')           // Required variable
-variable('limit', 'Int', 10)        // With default value
+variable('userId', 'ID!'); // Required variable
+variable('limit', 'Int', 10); // With default value
 ```
 
 ## Usage Examples
@@ -177,8 +176,8 @@ const q = query({
   users: field().select({
     id: true,
     name: true,
-    email: true
-  })
+    email: true,
+  }),
 });
 ```
 
@@ -186,12 +185,10 @@ const q = query({
 
 ```typescript
 const q = query({
-  user: field()
-    .args({ id: '123' })
-    .select({
-      id: true,
-      name: true
-    })
+  user: field().args({ id: '123' }).select({
+    id: true,
+    name: true,
+  }),
 });
 ```
 
@@ -204,12 +201,12 @@ const q = query({
   users: field()
     .args({
       limit: variable('pageSize', 'Int!', 20),
-      offset: variable('offset', 'Int', 0)
+      offset: variable('offset', 'Int', 0),
     })
     .select({
       id: true,
-      name: true
-    })
+      name: true,
+    }),
 });
 ```
 
@@ -217,22 +214,20 @@ const q = query({
 
 ```typescript
 const q = query({
-  posts: field()
-    .select({
+  posts: field().select({
+    id: true,
+    title: true,
+    author: field().select({
       id: true,
-      title: true,
-      author: field()
-        .select({
-          id: true,
-          name: true
-        }),
-      comments: field()
-        .args({ first: 10 })
-        .select({
-          text: true,
-          author: field().select({ name: true })
-        })
-    })
+      name: true,
+    }),
+    comments: field()
+      .args({ first: 10 })
+      .select({
+        text: true,
+        author: field().select({ name: true }),
+      }),
+  }),
 });
 ```
 
@@ -244,11 +239,11 @@ const q = query({
     .alias('recent')
     .args({ first: 10, orderBy: 'CREATED_DESC' })
     .select({ id: true, title: true }),
-  
+
   popularPosts: field()
     .alias('popular')
     .args({ first: 10, orderBy: 'VIEWS_DESC' })
-    .select({ id: true, title: true })
+    .select({ id: true, title: true }),
 });
 ```
 
@@ -256,15 +251,12 @@ const q = query({
 
 ```typescript
 const q = query({
-  user: field()
-    .select({
-      id: true,
-      name: true,
-      email: field()
-        .directive('include', { if: true }),
-      phone: field()
-        .directive('skip', { if: false })
-    })
+  user: field().select({
+    id: true,
+    name: true,
+    email: field().directive('include', { if: true }),
+    phone: field().directive('skip', { if: false }),
+  }),
 });
 ```
 
@@ -272,14 +264,11 @@ const q = query({
 
 ```typescript
 const q = query({
-  posts: field()
-    .paginate('relay')
-    .args({ first: 20 })
-    .select({
-      id: true,
-      title: true,
-      content: true
-    })
+  posts: field().paginate('relay').args({ first: 20 }).select({
+    id: true,
+    title: true,
+    content: true,
+  }),
 });
 
 // Generates query with edges/node/pageInfo structure
@@ -296,13 +285,13 @@ const q = query({
       where: where({
         age: gt(18),
         status: eq('active'),
-        name: contains('john')
-      })
+        name: contains('john'),
+      }),
     })
     .select({
       id: true,
-      name: true
-    })
+      name: true,
+    }),
 });
 ```
 
@@ -316,18 +305,22 @@ import { query, field } from '@graphjson/sdk';
 // TypeScript knows the structure
 const q = query({
   users: field()
-    .args({ /* autocomplete works here */ })
-    .select({ /* and here */ })
+    .args({
+      /* autocomplete works here */
+    })
+    .select({
+      /* and here */
+    }),
 });
 ```
 
 ## GraphJSON Ecosystem
 
-| Package | Description | NPM |
-|---------|-------------|-----|
-| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core) | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core) |
-| [@graphjson/json-dsl](https://www.npmjs.com/package/@graphjson/json-dsl) | Type definitions | [![npm](https://img.shields.io/npm/v/@graphjson/json-dsl)](https://www.npmjs.com/package/@graphjson/json-dsl) |
-| [@graphjson/presets](https://www.npmjs.com/package/@graphjson/presets) | Common presets | [![npm](https://img.shields.io/npm/v/@graphjson/presets)](https://www.npmjs.com/package/@graphjson/presets) |
+| Package                                                                  | Description              | NPM                                                                                                           |
+| ------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core)         | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core)         |
+| [@graphjson/json-dsl](https://www.npmjs.com/package/@graphjson/json-dsl) | Type definitions         | [![npm](https://img.shields.io/npm/v/@graphjson/json-dsl)](https://www.npmjs.com/package/@graphjson/json-dsl) |
+| [@graphjson/presets](https://www.npmjs.com/package/@graphjson/presets)   | Common presets           | [![npm](https://img.shields.io/npm/v/@graphjson/presets)](https://www.npmjs.com/package/@graphjson/presets)   |
 
 ## Examples
 

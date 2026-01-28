@@ -1,10 +1,6 @@
 import { print } from 'graphql';
 import { generateDocument } from '@graphjson/core';
-import {
-  query,
-  field,
-} from '@graphjson/sdk';
-
+import { query, field } from '@graphjson/sdk';
 
 export const input = query({
   search: field().select({
@@ -12,7 +8,7 @@ export const input = query({
       .paginate('relay')
       .args({
         first: 25,
-        orderBy: { alexaRank: 'ASC' }
+        orderBy: { alexaRank: 'ASC' },
       })
       .select({
         id: true,
@@ -23,12 +19,11 @@ export const input = query({
 
         // virtual field handled by Relay preset
         __aggregates: field().select({
-          _count: true
-        })
-      })
-  })
+          _count: true,
+        }),
+      }),
+  }),
 });
-
 
 const { ast, variables } = generateDocument(input, { applyRelay: true });
 

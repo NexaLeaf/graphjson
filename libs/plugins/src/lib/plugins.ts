@@ -5,10 +5,7 @@ export interface GraphJsonPluginContext {
 }
 
 export interface GraphJsonPlugin {
-  onField?(
-    field: FieldNode,
-    ctx: GraphJsonPluginContext
-  ): FieldNode | void;
+  onField?(field: FieldNode, ctx: GraphJsonPluginContext): FieldNode | void;
 
   onDocument?(doc: DocumentNode): DocumentNode | void;
 }

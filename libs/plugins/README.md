@@ -37,7 +37,7 @@ export function myPlugin(): GraphJsonPlugin {
     onField(field, context) {
       // Transform individual fields
       return field;
-    }
+    },
   };
 }
 ```
@@ -67,17 +67,17 @@ export function addOperationName(name: string): GraphJsonPlugin {
     onDocument(document) {
       return {
         ...document,
-        definitions: document.definitions.map(def => {
+        definitions: document.definitions.map((def) => {
           if (def.kind === Kind.OPERATION_DEFINITION) {
             return {
               ...def,
-              name: { kind: Kind.NAME, value: name }
+              name: { kind: Kind.NAME, value: name },
             };
           }
           return def;
-        })
+        }),
       };
-    }
+    },
   };
 }
 ```
@@ -91,7 +91,7 @@ export function addTimestampField(): GraphJsonPlugin {
   return {
     onField(field) {
       if (!field.selectionSet) return field;
-      
+
       return {
         ...field,
         selectionSet: {
@@ -100,12 +100,12 @@ export function addTimestampField(): GraphJsonPlugin {
             ...field.selectionSet.selections,
             {
               kind: Kind.FIELD,
-              name: { kind: Kind.NAME, value: 'timestamp' }
-            }
-          ]
-        }
+              name: { kind: Kind.NAME, value: 'timestamp' },
+            },
+          ],
+        },
       };
-    }
+    },
   };
 }
 ```
@@ -122,11 +122,11 @@ export function depthLimiter(maxDepth: number): GraphJsonPlugin {
         // Remove selections if too deep
         return {
           ...field,
-          selectionSet: undefined
+          selectionSet: undefined,
         };
       }
       return field;
-    }
+    },
   };
 }
 ```
@@ -142,7 +142,7 @@ export function relayPagination(): GraphJsonPlugin {
       if (!field.selectionSet) return;
 
       const hasEdges = field.selectionSet.selections.some(
-        s => s.kind === Kind.FIELD && s.name.value === 'edges'
+        (s) => s.kind === Kind.FIELD && s.name.value === 'edges'
       );
 
       if (hasEdges) return;
@@ -161,10 +161,10 @@ export function relayPagination(): GraphJsonPlugin {
                   {
                     kind: Kind.FIELD,
                     name: { kind: Kind.NAME, value: 'node' },
-                    selectionSet: field.selectionSet
-                  }
-                ]
-              }
+                    selectionSet: field.selectionSet,
+                  },
+                ],
+              },
             },
             {
               kind: Kind.FIELD,
@@ -173,14 +173,14 @@ export function relayPagination(): GraphJsonPlugin {
                 kind: Kind.SELECTION_SET,
                 selections: [
                   { kind: Kind.FIELD, name: { kind: Kind.NAME, value: 'hasNextPage' } },
-                  { kind: Kind.FIELD, name: { kind: Kind.NAME, value: 'endCursor' } }
-                ]
-              }
-            }
-          ]
-        }
+                  { kind: Kind.FIELD, name: { kind: Kind.NAME, value: 'endCursor' } },
+                ],
+              },
+            },
+          ],
+        },
       };
-    }
+    },
   };
 }
 ```
@@ -192,13 +192,13 @@ export function autoIncludeId(): GraphJsonPlugin {
   return {
     onField(field) {
       if (!field.selectionSet) return field;
-      
+
       const hasId = field.selectionSet.selections.some(
-        s => s.kind === Kind.FIELD && s.name.value === 'id'
+        (s) => s.kind === Kind.FIELD && s.name.value === 'id'
       );
-      
+
       if (hasId) return field;
-      
+
       return {
         ...field,
         selectionSet: {
@@ -206,13 +206,13 @@ export function autoIncludeId(): GraphJsonPlugin {
           selections: [
             {
               kind: Kind.FIELD,
-              name: { kind: Kind.NAME, value: 'id' }
+              name: { kind: Kind.NAME, value: 'id' },
             },
-            ...field.selectionSet.selections
-          ]
-        }
+            ...field.selectionSet.selections,
+          ],
+        },
       };
-    }
+    },
   };
 }
 ```
@@ -233,11 +233,7 @@ const transformed = applyPlugins(document, [relayPagination()]);
 ```typescript
 import { applyPlugins } from '@graphjson/core';
 
-const transformed = applyPlugins(document, [
-  plugin1(),
-  plugin2(),
-  plugin3()
-]);
+const transformed = applyPlugins(document, [plugin1(), plugin2(), plugin3()]);
 ```
 
 Plugins are applied in order.
@@ -255,17 +251,17 @@ export function typedPlugin(): GraphJsonPlugin {
     },
     onField(field: FieldNode, context: PluginContext): FieldNode {
       return field;
-    }
+    },
   };
 }
 ```
 
 ## GraphJSON Ecosystem
 
-| Package | Description | NPM |
-|---------|-------------|-----|
-| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core) | Core library (uses plugins) | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core) |
-| [@graphjson/presets](https://www.npmjs.com/package/@graphjson/presets) | Pre-built plugins | [![npm](https://img.shields.io/npm/v/@graphjson/presets)](https://www.npmjs.com/package/@graphjson/presets) |
+| Package                                                                | Description                 | NPM                                                                                                         |
+| ---------------------------------------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core)       | Core library (uses plugins) | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core)       |
+| [@graphjson/presets](https://www.npmjs.com/package/@graphjson/presets) | Pre-built plugins           | [![npm](https://img.shields.io/npm/v/@graphjson/presets)](https://www.npmjs.com/package/@graphjson/presets) |
 
 ## Contributing
 

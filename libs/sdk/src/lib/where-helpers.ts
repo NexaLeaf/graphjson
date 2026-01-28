@@ -34,10 +34,7 @@ function normalizeConditions(
     if (!cond || typeof cond !== 'object') continue;
 
     // Flatten same operator
-    if (
-      operator in cond &&
-      Array.isArray((cond as any)[operator])
-    ) {
+    if (operator in cond && Array.isArray((cond as any)[operator])) {
       result.push(...(cond as any)[operator]);
     } else {
       result.push(cond);

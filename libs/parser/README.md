@@ -14,7 +14,7 @@ GraphJSON Parser is a unified package that bundles all GraphJSON libraries, prov
 ✅ **Complete Toolkit** - Core, SDK, Schema, AST, Plugins, Presets, and more  
 ✅ **Type-Safe** - Full TypeScript support with autocomplete  
 ✅ **Version Consistency** - All packages stay in sync  
-✅ **Easy Imports** - Import everything from a single package  
+✅ **Easy Imports** - Import everything from a single package
 
 ## Installation
 
@@ -26,17 +26,17 @@ npm install @graphjson/parser
 
 This package includes all GraphJSON libraries:
 
-| Package | Description | Size |
-|---------|-------------|------|
-| **@graphjson/core** | Core document generation engine | Core |
-| **@graphjson/sdk** | Type-safe query builder with fluent API | SDK |
-| **@graphjson/schema** | JSON schema validation | Schema |
-| **@graphjson/ast** | AST building utilities | AST |
-| **@graphjson/json-dsl** | JSON DSL type definitions | Types |
-| **@graphjson/plugins** | Plugin system for transformations | Plugins |
-| **@graphjson/presets** | Common presets (Relay pagination, etc.) | Presets |
-| **@graphjson/printer** | Query string printer utilities | Printer |
-| **@graphjson/shared** | Shared utilities | Utils |
+| Package                 | Description                             | Size    |
+| ----------------------- | --------------------------------------- | ------- |
+| **@graphjson/core**     | Core document generation engine         | Core    |
+| **@graphjson/sdk**      | Type-safe query builder with fluent API | SDK     |
+| **@graphjson/schema**   | JSON schema validation                  | Schema  |
+| **@graphjson/ast**      | AST building utilities                  | AST     |
+| **@graphjson/json-dsl** | JSON DSL type definitions               | Types   |
+| **@graphjson/plugins**  | Plugin system for transformations       | Plugins |
+| **@graphjson/presets**  | Common presets (Relay pagination, etc.) | Presets |
+| **@graphjson/printer**  | Query string printer utilities          | Printer |
+| **@graphjson/shared**   | Shared utilities                        | Utils   |
 
 ## Quick Start
 
@@ -50,15 +50,15 @@ const { ast, variables } = generateDocument({
   query: {
     users: {
       args: {
-        limit: { $var: 'limit', type: 'Int!', default: 10 }
+        limit: { $var: 'limit', type: 'Int!', default: 10 },
       },
       select: {
         id: true,
         name: true,
-        email: true
-      }
-    }
-  }
+        email: true,
+      },
+    },
+  },
 });
 
 console.log(print(ast));
@@ -82,13 +82,13 @@ const myQuery = query({
   users: field()
     .args({
       limit: variable('limit', 'Int!', 20),
-      search: variable('search', 'String')
+      search: variable('search', 'String'),
     })
     .select({
       id: true,
       name: true,
-      email: true
-    })
+      email: true,
+    }),
 });
 ```
 
@@ -100,9 +100,9 @@ import { generateDocument, validateDocument } from '@graphjson/parser';
 const jsonQuery = {
   query: {
     users: {
-      select: { id: true, name: true }
-    }
-  }
+      select: { id: true, name: true },
+    },
+  },
 };
 
 // Validate before generating
@@ -128,14 +128,15 @@ const { ast, variables } = generateDocument({
       select: {
         id: true,
         title: true,
-        content: true
-      }
-    }
-  }
+        content: true,
+      },
+    },
+  },
 });
 ```
 
 **Supports:**
+
 - Query, Mutation, and Subscription operations
 - Nested field selections
 - Arguments and variables
@@ -155,18 +156,19 @@ const myQuery = query({
       limit: variable('limit', 'Int!', 20),
       where: where({
         age: gt(18),
-        status: eq('active')
-      })
+        status: eq('active'),
+      }),
     })
     .select({
       id: true,
       name: true,
-      email: true
-    })
+      email: true,
+    }),
 });
 ```
 
 **SDK Methods:**
+
 - `query()` - Create query operation
 - `mutation()` - Create mutation operation
 - `field()` - Create field builder
@@ -186,9 +188,9 @@ const { ast } = generateDocument({
   query: {
     posts: {
       args: { first: 20 },
-      select: { id: true, title: true }
-    }
-  }
+      select: { id: true, title: true },
+    },
+  },
 });
 
 // Apply Relay pagination
@@ -196,6 +198,7 @@ const relayQuery = applyPlugins(ast, [relayPaginationPreset()]);
 ```
 
 **Built-in Presets:**
+
 - `relayPaginationPreset()` - Relay-style cursor pagination with edges/pageInfo
 
 ### 4. Schema Validation
@@ -208,9 +211,9 @@ import { validateDocument } from '@graphjson/parser';
 const validation = validateDocument({
   query: {
     users: {
-      select: { id: true, name: true }
-    }
-  }
+      select: { id: true, name: true },
+    },
+  },
 });
 
 if (validation.valid) {
@@ -230,11 +233,11 @@ const { ast, variables } = generateDocument({
     user: {
       args: {
         id: { $var: 'userId', type: 'ID!', default: '123' },
-        includeDeleted: { $var: 'showDeleted', type: 'Boolean', default: false }
+        includeDeleted: { $var: 'showDeleted', type: 'Boolean', default: false },
       },
-      select: { id: true, name: true }
-    }
-  }
+      select: { id: true, name: true },
+    },
+  },
 });
 
 // Variables auto-extracted
@@ -253,14 +256,15 @@ const myQuery = query({
   users: field().select({
     id: true,
     name: true,
-    email: true
-  })
+    email: true,
+  }),
 });
 
 const { ast } = generateDocument(myQuery);
 ```
 
 Generates:
+
 ```graphql
 query {
   users {
@@ -280,20 +284,21 @@ const myQuery = query({
   users: field()
     .args({
       limit: variable('limit', 'Int!', 10),
-      offset: variable('offset', 'Int', 0)
+      offset: variable('offset', 'Int', 0),
     })
     .select({
       id: true,
-      name: true
-    })
+      name: true,
+    }),
 });
 
 const { ast, variables } = generateDocument(myQuery);
 ```
 
 Generates:
+
 ```graphql
-query($limit: Int!, $offset: Int) {
+query ($limit: Int!, $offset: Int) {
   users(limit: $limit, offset: $offset) {
     id
     name
@@ -315,15 +320,13 @@ const myQuery = query({
         .select({
           id: true,
           name: true,
-          employees: field()
-            .args({ first: 10 })
-            .select({
-              id: true,
-              firstName: true,
-              lastName: true
-            })
-        })
-    })
+          employees: field().args({ first: 10 }).select({
+            id: true,
+            firstName: true,
+            lastName: true,
+          }),
+        }),
+    }),
 });
 ```
 
@@ -336,13 +339,13 @@ const myQuery = query({
   posts: field()
     .args({
       first: variable('first', 'Int', 20),
-      after: variable('after', 'String')
+      after: variable('after', 'String'),
     })
     .select({
       id: true,
       title: true,
-      content: true
-    })
+      content: true,
+    }),
 });
 
 const { ast } = generateDocument(myQuery);
@@ -362,14 +365,14 @@ const myQuery = query({
       where: where({
         age: gt(18),
         status: eq('active'),
-        name: contains('john')
-      })
+        name: contains('john'),
+      }),
     })
     .select({
       id: true,
       name: true,
-      age: true
-    })
+      age: true,
+    }),
 });
 ```
 
@@ -381,14 +384,14 @@ import { mutation, field, variable } from '@graphjson/parser';
 const createUser = mutation({
   createUser: field()
     .args({
-      input: variable('userInput', 'UserInput!')
+      input: variable('userInput', 'UserInput!'),
     })
     .select({
       id: true,
       name: true,
       email: true,
-      createdAt: true
-    })
+      createdAt: true,
+    }),
 });
 ```
 
@@ -397,13 +400,13 @@ const createUser = mutation({
 ```typescript
 const myQuery = {
   query: {
-    users: field().select({ id: true, name: true })
+    users: field().select({ id: true, name: true }),
   },
   mutation: {
     updateUser: field()
       .args({ id: variable('userId', 'ID!') })
-      .select({ id: true, name: true })
-  }
+      .select({ id: true, name: true }),
+  },
 };
 
 const { ast, variables } = generateDocument(myQuery);
@@ -419,18 +422,18 @@ import { query, field, generateDocument } from '@graphjson/parser';
 
 const client = new ApolloClient({
   uri: 'https://api.example.com/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 const myQuery = query({
-  users: field().select({ id: true, name: true })
+  users: field().select({ id: true, name: true }),
 });
 
 const { ast, variables } = generateDocument(myQuery);
 
 const result = await client.query({
   query: ast,
-  variables
+  variables,
 });
 ```
 
@@ -441,11 +444,11 @@ import { createClient } from 'urql';
 import { query, field, generateDocument } from '@graphjson/parser';
 
 const client = createClient({
-  url: 'https://api.example.com/graphql'
+  url: 'https://api.example.com/graphql',
 });
 
 const myQuery = query({
-  posts: field().select({ id: true, title: true })
+  posts: field().select({ id: true, title: true }),
 });
 
 const { ast, variables } = generateDocument(myQuery);
@@ -461,7 +464,7 @@ import { query, field, generateDocument } from '@graphjson/parser';
 const client = new GraphQLClient('https://api.example.com/graphql');
 
 const myQuery = query({
-  users: field().select({ id: true, name: true })
+  users: field().select({ id: true, name: true }),
 });
 
 const { ast, variables } = generateDocument(myQuery);
@@ -478,15 +481,15 @@ import type {
   JsonField,
   JsonVariable,
   GenerateResult,
-  GraphJsonPlugin
+  GraphJsonPlugin,
 } from '@graphjson/parser';
 
 const query: JsonDocument = {
   query: {
     users: {
-      select: { id: true, name: true }
-    }
-  }
+      select: { id: true, name: true },
+    },
+  },
 };
 ```
 
@@ -499,6 +502,7 @@ const query: JsonDocument = {
 Generates GraphQL document from JSON definition.
 
 **Returns:**
+
 ```typescript
 {
   ast: DocumentNode,        // GraphQL AST
@@ -523,6 +527,7 @@ Creates mutation operation.
 #### `field(): FieldBuilder`
 
 Creates field builder with methods:
+
 - `.args(obj)` - Add arguments
 - `.select(obj)` - Select subfields
 - `.alias(name)` - Set alias
@@ -560,6 +565,7 @@ Creates GraphQL variable reference.
 Validates JSON query structure.
 
 **Returns:**
+
 ```typescript
 {
   valid: boolean,
@@ -575,6 +581,7 @@ Validates JSON query structure.
 #### `relayPaginationPreset(): GraphJsonPlugin`
 
 Relay-style pagination preset that adds:
+
 - `edges { node { ... } cursor }`
 - `pageInfo { hasNextPage, hasPreviousPage, startCursor, endCursor }`
 
@@ -594,7 +601,7 @@ import {
   generateDocument,
   validateDocument,
   applyPlugins,
-  relayPaginationPreset
+  relayPaginationPreset,
 } from '@graphjson/parser';
 
 // Build query with SDK
@@ -606,8 +613,8 @@ const myQuery = query({
       where: where({
         status: eq('published'),
         views: gt(100),
-        title: contains('GraphQL')
-      })
+        title: contains('GraphQL'),
+      }),
     })
     .paginate('relay')
     .select({
@@ -617,12 +624,12 @@ const myQuery = query({
       author: field().select({
         id: true,
         name: true,
-        avatar: true
+        avatar: true,
       }),
       tags: field().select({
-        name: true
-      })
-    })
+        name: true,
+      }),
+    }),
 });
 
 // Validate
@@ -651,14 +658,14 @@ import { query, mutation, field, variable, generateDocument } from '@graphjson/p
 const getUsers = query({
   users: field()
     .args({ limit: variable('limit', 'Int', 10) })
-    .select({ id: true, name: true, email: true })
+    .select({ id: true, name: true, email: true }),
 });
 
 // CREATE
 const createUser = mutation({
   createUser: field()
     .args({ input: variable('input', 'UserInput!') })
-    .select({ id: true, name: true, email: true, createdAt: true })
+    .select({ id: true, name: true, email: true, createdAt: true }),
 });
 
 // UPDATE
@@ -666,16 +673,16 @@ const updateUser = mutation({
   updateUser: field()
     .args({
       id: variable('userId', 'ID!'),
-      input: variable('updates', 'UserUpdateInput!')
+      input: variable('updates', 'UserUpdateInput!'),
     })
-    .select({ id: true, name: true, updatedAt: true })
+    .select({ id: true, name: true, updatedAt: true }),
 });
 
 // DELETE
 const deleteUser = mutation({
   deleteUser: field()
     .args({ id: variable('userId', 'ID!') })
-    .select({ success: true, message: true })
+    .select({ success: true, message: true }),
 });
 ```
 
@@ -698,27 +705,26 @@ const complexQuery = query({
           manager: field().select({
             id: true,
             name: true,
-            email: true
+            email: true,
           }),
           employees: field()
             .args({
               first: 20,
-              orderBy: 'NAME_ASC'
+              orderBy: 'NAME_ASC',
             })
             .select({
               id: true,
               firstName: true,
               lastName: true,
               position: true,
-              projects: field()
-                .select({
-                  id: true,
-                  title: true,
-                  deadline: true
-                })
-            })
-        })
-    })
+              projects: field().select({
+                id: true,
+                title: true,
+                deadline: true,
+              }),
+            }),
+        }),
+    }),
 });
 ```
 
@@ -739,9 +745,9 @@ const customPlugin: GraphJsonPlugin = {
       Field(node) {
         // Transform field node
         return node;
-      }
+      },
     });
-  }
+  },
 };
 
 const transformed = applyPlugins(ast, [customPlugin]);
@@ -751,13 +757,12 @@ const transformed = applyPlugins(ast, [customPlugin]);
 
 ```typescript
 const q = query({
-  user: field()
-    .select({
-      id: true,
-      name: true,
-      email: field().directive('include', { if: variable('includeEmail', 'Boolean', true) }),
-      phone: field().directive('skip', { if: variable('skipPhone', 'Boolean', false) })
-    })
+  user: field().select({
+    id: true,
+    name: true,
+    email: field().directive('include', { if: variable('includeEmail', 'Boolean', true) }),
+    phone: field().directive('skip', { if: variable('skipPhone', 'Boolean', false) }),
+  }),
 });
 ```
 
@@ -769,11 +774,11 @@ const q = query({
     .alias('recent')
     .args({ first: 10, orderBy: 'CREATED_DESC' })
     .select({ id: true, title: true }),
-  
+
   popularPosts: field()
     .alias('popular')
     .args({ first: 10, orderBy: 'VIEWS_DESC' })
-    .select({ id: true, title: true })
+    .select({ id: true, title: true }),
 });
 ```
 
@@ -797,11 +802,13 @@ npm install @graphjson/schema
 ### All-in-One Installation
 
 **Before:**
+
 ```bash
 npm install @graphjson/core @graphjson/sdk @graphjson/schema @graphjson/ast @graphjson/json-dsl @graphjson/plugins @graphjson/presets @graphjson/printer @graphjson/shared
 ```
 
 **Now:**
+
 ```bash
 npm install @graphjson/parser
 ```
@@ -809,6 +816,7 @@ npm install @graphjson/parser
 ### Unified Imports
 
 **Before:**
+
 ```typescript
 import { generateDocument } from '@graphjson/core';
 import { query, field, variable } from '@graphjson/sdk';
@@ -817,6 +825,7 @@ import { relayPaginationPreset } from '@graphjson/presets';
 ```
 
 **Now:**
+
 ```typescript
 import {
   generateDocument,
@@ -824,7 +833,7 @@ import {
   field,
   variable,
   validateDocument,
-  relayPaginationPreset
+  relayPaginationPreset,
 } from '@graphjson/parser';
 ```
 
@@ -844,33 +853,33 @@ import type {
   JsonVariable,
   JsonValue,
   GenerateResult,
-  
+
   // Plugin types
   GraphJsonPlugin,
   PluginContext,
-  
+
   // SDK types
   FieldBuilder,
   WhereCondition,
   FilterOperator,
-  
+
   // Schema types
   ValidationResult,
-  ValidationError
+  ValidationError,
 } from '@graphjson/parser';
 ```
 
 ## Package Contents
 
-| Export Category | Exports |
-|-----------------|---------|
-| **Core** | `generateDocument`, `applyPlugins` |
-| **SDK** | `query`, `mutation`, `field`, `variable`, `where` |
-| **Operators** | `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `notIn`, `contains`, `startsWith`, `endsWith` |
-| **Logical** | `and`, `or`, `not` |
-| **Schema** | `validateDocument` |
-| **Presets** | `relayPaginationPreset` |
-| **Types** | All TypeScript types and interfaces |
+| Export Category | Exports                                                                                   |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| **Core**        | `generateDocument`, `applyPlugins`                                                        |
+| **SDK**         | `query`, `mutation`, `field`, `variable`, `where`                                         |
+| **Operators**   | `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `notIn`, `contains`, `startsWith`, `endsWith` |
+| **Logical**     | `and`, `or`, `not`                                                                        |
+| **Schema**      | `validateDocument`                                                                        |
+| **Presets**     | `relayPaginationPreset`                                                                   |
+| **Types**       | All TypeScript types and interfaces                                                       |
 
 ## Examples Repository
 

@@ -33,10 +33,10 @@ const { ast } = generateDocument({
     users: {
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 });
 
 // Print the query
@@ -44,6 +44,7 @@ console.log(print(ast));
 ```
 
 **Output:**
+
 ```graphql
 query {
   users {
@@ -80,10 +81,10 @@ const formatted = print(ast);
 
 ## GraphJSON Ecosystem
 
-| Package | Description | NPM |
-|---------|-------------|-----|
+| Package                                                          | Description              | NPM                                                                                                   |
+| ---------------------------------------------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------- |
 | [@graphjson/core](https://www.npmjs.com/package/@graphjson/core) | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core) |
-| [@graphjson/ast](https://www.npmjs.com/package/@graphjson/ast) | AST building utilities | [![npm](https://img.shields.io/npm/v/@graphjson/ast)](https://www.npmjs.com/package/@graphjson/ast) |
+| [@graphjson/ast](https://www.npmjs.com/package/@graphjson/ast)   | AST building utilities   | [![npm](https://img.shields.io/npm/v/@graphjson/ast)](https://www.npmjs.com/package/@graphjson/ast)   |
 
 ## Examples
 

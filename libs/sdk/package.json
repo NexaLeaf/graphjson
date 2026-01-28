@@ -4,5 +4,7 @@
   "type": "module",
   "main": "./index.js",
   "types": "./index.d.ts",
-  "dependencies": {}
+  "dependencies": {
+    "@graphjson/json-dsl": "0.0.1"
+  }
 }

@@ -8,8 +8,8 @@ import {
   OperationTypeNode,
 } from 'graphql';
 import { JsonDocument, JsonVariable } from '@graphjson/json-dsl';
-import {  buildFieldNode } from '@graphjson/ast';
-import {relayPaginationPreset} from '@graphjson/presets';
+import { buildFieldNode } from '@graphjson/ast';
+import { relayPaginationPreset } from '@graphjson/presets';
 
 interface GenerateResult {
   ast: DocumentNode;
@@ -33,7 +33,10 @@ function parseType(type: string): TypeNode {
     name: { kind: Kind.NAME, value: type },
   };
 }
-export function generateDocument(json: JsonDocument, options?: { applyRelay?: boolean }): GenerateResult {
+export function generateDocument(
+  json: JsonDocument,
+  options?: { applyRelay?: boolean }
+): GenerateResult {
   const variables: Record<string, any> = {};
   const variableDefinitions: Map<string, VariableDefinitionNode> = new Map();
   const relayFields = new Set<FieldNode>();
@@ -73,10 +76,8 @@ export function generateDocument(json: JsonDocument, options?: { applyRelay?: bo
   const definitions: OperationDefinitionNode[] = [];
 
   if (json.query) definitions.push(buildOperation('query', json.query));
-  if (json.mutation)
-    definitions.push(buildOperation('mutation', json.mutation));
-  if (json.subscription)
-    definitions.push(buildOperation('subscription', json.subscription));
+  if (json.mutation) definitions.push(buildOperation('mutation', json.mutation));
+  if (json.subscription) definitions.push(buildOperation('subscription', json.subscription));
 
   const result: GenerateResult = {
     ast: {
@@ -86,7 +87,7 @@ export function generateDocument(json: JsonDocument, options?: { applyRelay?: bo
     variables,
     relayFields,
   };
-  
+
   if (options?.applyRelay) {
     result.ast = relayPaginationPreset(result.ast, result.relayFields);
   }

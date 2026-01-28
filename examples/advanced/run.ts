@@ -1,10 +1,6 @@
 import { print } from 'graphql';
 import { generateDocument } from '@graphjson/core';
-import {
-  query,
-  field,
-  variable
-} from '@graphjson/sdk';
+import { query, field, variable } from '@graphjson/sdk';
 
 /**
  * Advanced example:
@@ -33,27 +29,24 @@ const input = query({
             .directive('include', { if: true })
             .args({
               first: 10,
-              after: variable('employeeCursor', 'String')
+              after: variable('employeeCursor', 'String'),
             })
             .select({
               id: true,
               firstName: true,
               lastName: true,
 
-              projects: field()
-                .directive('skip', { if: false })
-                .args({ active: true })
-                .select({
-                  id: true,
-                  title: true,
-                  status: true
-                }),
+              projects: field().directive('skip', { if: false }).args({ active: true }).select({
+                id: true,
+                title: true,
+                status: true,
+              }),
 
               // fragment spread
-              '...EmployeeFields': true
-            })
-        })
-    })
+              '...EmployeeFields': true,
+            }),
+        }),
+    }),
 });
 
 /* ---------------------------------------

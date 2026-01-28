@@ -5,9 +5,7 @@
   "projectType": "library",
   "release": {
     "version": {
-      "manifestRootsToUpdate": [
-        "dist/{projectRoot}"
-      ],
+      "manifestRootsToUpdate": ["dist/{projectRoot}"],
       "currentVersionResolver": "git-tag",
       "fallbackCurrentVersionResolver": "disk"
     }
@@ -20,10 +18,7 @@
       }
     },
     "lint": {
-      "inputs": [
-        "{workspaceRoot}/eslint.config.mjs",
-        "{workspaceRoot}/.eslintignore"
-      ]
+      "inputs": ["{workspaceRoot}/eslint.config.mjs", "{workspaceRoot}/.eslintignore"]
     }
   }
 }

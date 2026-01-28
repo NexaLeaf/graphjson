@@ -32,10 +32,10 @@ const query = {
     users: {
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 };
 
 const result = validateDocument(query);
@@ -55,15 +55,15 @@ Validates a JSON document against GraphJSON schema rules.
 
 **Parameters:**
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `json` | `JsonDocument` | The JSON query to validate |
+| Parameter | Type           | Description                |
+| --------- | -------------- | -------------------------- |
+| `json`    | `JsonDocument` | The JSON query to validate |
 
 **Returns:** `ValidationResult` object with:
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `valid` | `boolean` | Whether the document is valid |
+| Property | Type       | Description                        |
+| -------- | ---------- | ---------------------------------- |
+| `valid`  | `boolean`  | Whether the document is valid      |
 | `errors` | `string[]` | Array of validation error messages |
 
 ## Validation Rules
@@ -88,10 +88,10 @@ const valid = validateDocument({
     users: {
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 });
 
 console.log(valid); // { valid: true, errors: [] }
@@ -103,7 +103,7 @@ console.log(valid); // { valid: true, errors: [] }
 const result = validateDocument(query);
 
 if (!result.valid) {
-  result.errors.forEach(error => {
+  result.errors.forEach((error) => {
     console.error(`Validation error: ${error}`);
   });
   throw new Error('Invalid query structure');
@@ -118,21 +118,21 @@ import { generateDocument } from '@graphjson/core';
 
 function safeGenerate(json) {
   const validation = validateDocument(json);
-  
+
   if (!validation.valid) {
     throw new Error(`Invalid query: ${validation.errors.join(', ')}`);
   }
-  
+
   return generateDocument(json);
 }
 ```
 
 ## GraphJSON Ecosystem
 
-| Package | Description | NPM |
-|---------|-------------|-----|
-| [@graphjson/json-dsl](https://www.npmjs.com/package/@graphjson/json-dsl) | Type definitions | [![npm](https://img.shields.io/npm/v/@graphjson/json-dsl)](https://www.npmjs.com/package/@graphjson/json-dsl) |
-| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core) | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core) |
+| Package                                                                  | Description              | NPM                                                                                                           |
+| ------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| [@graphjson/json-dsl](https://www.npmjs.com/package/@graphjson/json-dsl) | Type definitions         | [![npm](https://img.shields.io/npm/v/@graphjson/json-dsl)](https://www.npmjs.com/package/@graphjson/json-dsl) |
+| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core)         | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core)         |
 
 ## Contributing
 

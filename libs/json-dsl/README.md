@@ -31,14 +31,14 @@ const query: JsonDocument = {
   query: {
     users: {
       args: {
-        limit: { $var: 'limit', type: 'Int!', default: 10 }
+        limit: { $var: 'limit', type: 'Int!', default: 10 },
       },
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 };
 ```
 
@@ -61,14 +61,14 @@ interface JsonDocument {
 ```typescript
 const doc: JsonDocument = {
   query: {
-    users: { select: { id: true } }
+    users: { select: { id: true } },
   },
   mutation: {
     createUser: {
       args: { input: { $var: 'user', type: 'UserInput!' } },
-      select: { id: true }
-    }
-  }
+      select: { id: true },
+    },
+  },
 };
 ```
 
@@ -87,17 +87,17 @@ interface JsonField {
 
 ```typescript
 const userField: JsonField = {
-  args: { id: "123" },
+  args: { id: '123' },
   select: {
     id: true,
     name: true,
     posts: {
       args: { first: 10 },
       select: {
-        title: true
-      }
-    }
-  }
+        title: true,
+      },
+    },
+  },
 };
 ```
 
@@ -107,9 +107,9 @@ Represents a GraphQL variable reference.
 
 ```typescript
 interface JsonVariable {
-  $var: string;      // Variable name
-  type: string;      // GraphQL type
-  default?: any;     // Optional default value
+  $var: string; // Variable name
+  type: string; // GraphQL type
+  default?: any; // Optional default value
 }
 ```
 
@@ -119,7 +119,7 @@ interface JsonVariable {
 const idVar: JsonVariable = {
   $var: 'userId',
   type: 'ID!',
-  default: '123'
+  default: '123',
 };
 ```
 
@@ -128,13 +128,7 @@ const idVar: JsonVariable = {
 Union type for all possible JSON values.
 
 ```typescript
-type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JsonValue[]
-  | { [key: string]: JsonValue };
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 ```
 
 ## Usage Examples
@@ -151,9 +145,9 @@ const query: JsonDocument = {
         id: true,
         name: true,
         // TypeScript will error if you use invalid structure
-      }
-    }
-  }
+      },
+    },
+  },
 };
 ```
 
@@ -168,8 +162,8 @@ function createUserQuery(userId: string): JsonField {
     select: {
       id: true,
       name: true,
-      email: true
-    }
+      email: true,
+    },
   };
 }
 ```
@@ -179,15 +173,11 @@ function createUserQuery(userId: string): JsonField {
 ```typescript
 import type { JsonVariable } from '@graphjson/json-dsl';
 
-function createVariable(
-  name: string,
-  type: string,
-  defaultValue?: any
-): JsonVariable {
+function createVariable(name: string, type: string, defaultValue?: any): JsonVariable {
   return {
     $var: name,
     type,
-    ...(defaultValue !== undefined && { default: defaultValue })
+    ...(defaultValue !== undefined && { default: defaultValue }),
   };
 }
 
@@ -233,11 +223,11 @@ For best experience, ensure your `tsconfig.json` includes:
 
 ## GraphJSON Ecosystem
 
-| Package | Description | NPM |
-|---------|-------------|-----|
+| Package                                                          | Description              | NPM                                                                                                   |
+| ---------------------------------------------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------- |
 | [@graphjson/core](https://www.npmjs.com/package/@graphjson/core) | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core) |
-| [@graphjson/ast](https://www.npmjs.com/package/@graphjson/ast) | AST building utilities | [![npm](https://img.shields.io/npm/v/@graphjson/ast)](https://www.npmjs.com/package/@graphjson/ast) |
-| [@graphjson/sdk](https://www.npmjs.com/package/@graphjson/sdk) | High-level type-safe SDK | [![npm](https://img.shields.io/npm/v/@graphjson/sdk)](https://www.npmjs.com/package/@graphjson/sdk) |
+| [@graphjson/ast](https://www.npmjs.com/package/@graphjson/ast)   | AST building utilities   | [![npm](https://img.shields.io/npm/v/@graphjson/ast)](https://www.npmjs.com/package/@graphjson/ast)   |
+| [@graphjson/sdk](https://www.npmjs.com/package/@graphjson/sdk)   | High-level type-safe SDK | [![npm](https://img.shields.io/npm/v/@graphjson/sdk)](https://www.npmjs.com/package/@graphjson/sdk)   |
 
 ## Contributing
 

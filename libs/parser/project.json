@@ -3,16 +3,11 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/parser/src",
   "projectType": "library",
-  "tags": [
-    "scope:ast"
-  ],
+  "tags": ["scope:parser"],
   "// targets": "to see all targets run: nx show project parser --web",
   "targets": {
     "lint": {
-      "inputs": [
-        "{workspaceRoot}/eslint.config.mjs",
-        "{workspaceRoot}/.eslintignore"
-      ]
+      "inputs": ["{workspaceRoot}/eslint.config.mjs", "{workspaceRoot}/.eslintignore"]
     }
   }
 }

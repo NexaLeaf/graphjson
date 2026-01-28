@@ -45,14 +45,7 @@ Each publishable library needs a properly configured `package.json`. Here's the 
       "import": "./index.js"
     }
   },
-  "files": [
-    "index.js",
-    "index.d.ts",
-    "**/*.js",
-    "**/*.d.ts",
-    "README.md",
-    "LICENSE"
-  ],
+  "files": ["index.js", "index.d.ts", "**/*.js", "**/*.d.ts", "README.md", "LICENSE"],
   "publishConfig": {
     "access": "public"
   },
@@ -89,12 +82,14 @@ Your monorepo is already configured with Nx release in `nx.json`:
 ### Version Management
 
 #### 1. Preview Changes (Dry Run)
+
 ```bash
 # See what would be released without making changes
 npx nx release --dry-run
 ```
 
 #### 2. Version Packages
+
 ```bash
 # Bump versions and update changelogs
 npx nx release version
@@ -106,6 +101,7 @@ npx nx release version major  # 1.0.0 → 2.0.0
 ```
 
 #### 3. Publish to NPM
+
 ```bash
 # Publish all changed packages
 npx nx release publish
@@ -115,6 +111,7 @@ npx nx release publish --dry-run
 ```
 
 #### 4. Complete Release (Version + Publish)
+
 ```bash
 # One command to do everything
 npx nx release
@@ -398,11 +395,11 @@ Nx automatically generates CHANGELOGs based on commits:
 
 ### Features
 
-* add support for nested queries ([abc123](commit-link))
+- add support for nested queries ([abc123](commit-link))
 
 ### Bug Fixes
 
-* fix variable handling ([def456](commit-link))
+- fix variable handling ([def456](commit-link))
 ```
 
 ### 4. Pre-publish Checklist
@@ -623,11 +620,13 @@ npm view @graphjson/core
 ### Monorepo Publishing Strategy
 
 **Independent Versioning** (Current Setup):
+
 - Each package has its own version
 - Packages can be released independently
 - More flexible for consumers
 
 **Fixed/Lockstep Versioning**:
+
 ```json
 "release": {
   "version": {
@@ -714,6 +713,7 @@ echo "✅ All checks passed! Ready to publish."
 ```
 
 Make it executable:
+
 ```bash
 chmod +x scripts/pre-publish-check.sh
 ./scripts/pre-publish-check.sh
@@ -733,18 +733,18 @@ chmod +x scripts/pre-publish-check.sh
 
 ## Quick Reference Card
 
-| Task | Command |
-|------|---------|
-| Preview release | `npx nx release --dry-run` |
-| Version packages | `npx nx release version` |
-| Publish packages | `npx nx release publish` |
-| Complete release | `npx nx release` |
-| Patch version | `npx nx release version patch` |
-| Minor version | `npx nx release version minor` |
-| Major version | `npx nx release version major` |
-| Start local registry | `npx nx local-registry` |
-| View package info | `npm view @graphjson/core` |
-| Pack for inspection | `npm pack --dry-run` |
+| Task                 | Command                        |
+| -------------------- | ------------------------------ |
+| Preview release      | `npx nx release --dry-run`     |
+| Version packages     | `npx nx release version`       |
+| Publish packages     | `npx nx release publish`       |
+| Complete release     | `npx nx release`               |
+| Patch version        | `npx nx release version patch` |
+| Minor version        | `npx nx release version minor` |
+| Major version        | `npx nx release version major` |
+| Start local registry | `npx nx local-registry`        |
+| View package info    | `npm view @graphjson/core`     |
+| Pack for inspection  | `npm pack --dry-run`           |
 
 ---
 
@@ -753,8 +753,8 @@ chmod +x scripts/pre-publish-check.sh
 ✅ Nx release configured  
 ✅ Local registry available (Verdaccio)  
 ✅ Pre-version build configured  
-✅ Scoped packages (@graphjson/*)  
+✅ Scoped packages (@graphjson/\*)  
 ⚠️ Need to add NPM_TOKEN to GitHub secrets for CI/CD  
-⚠️ Consider adding release workflow to GitHub Actions  
+⚠️ Consider adding release workflow to GitHub Actions
 
 Ready to publish! 🚀

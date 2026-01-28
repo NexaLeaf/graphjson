@@ -1,9 +1,4 @@
-import {
-  ArgumentNode,
-  FieldNode,
-  Kind,
-  SelectionNode,
-} from 'graphql';
+import { ArgumentNode, FieldNode, Kind, SelectionNode } from 'graphql';
 import { JsonField, JsonVariable } from '@graphjson/json-dsl';
 import { literalToValueNode } from './literals.js';
 import { isJsonVariable } from './is-json-variable.js';
@@ -54,14 +49,7 @@ export function buildFieldNode(
           name: { kind: Kind.NAME, value: key },
         });
       } else {
-        selections.push(
-          buildFieldNode(
-            key,
-            val as JsonField,
-            collectVar,
-            relayFields
-          )
-        );
+        selections.push(buildFieldNode(key, val as JsonField, collectVar, relayFields));
       }
     }
   }
@@ -70,9 +58,7 @@ export function buildFieldNode(
     kind: Kind.FIELD,
     name: { kind: Kind.NAME, value: name },
     arguments: args.length ? args : undefined,
-    selectionSet: selections.length
-      ? { kind: Kind.SELECTION_SET, selections }
-      : undefined,
+    selectionSet: selections.length ? { kind: Kind.SELECTION_SET, selections } : undefined,
   };
 
   if (field.paginate === 'relay') {

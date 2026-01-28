@@ -35,10 +35,10 @@ const { ast } = generateDocument({
       args: { first: 20 },
       select: {
         id: true,
-        title: true
-      }
-    }
-  }
+        title: true,
+      },
+    },
+  },
 });
 
 // Apply Relay pagination preset
@@ -54,6 +54,7 @@ const relayQuery = applyPlugins(ast, [relayPagination()]);
 Transforms queries to follow the Relay pagination specification.
 
 **Before:**
+
 ```graphql
 query {
   posts(first: 20) {
@@ -64,6 +65,7 @@ query {
 ```
 
 **After:**
+
 ```graphql
 query {
   posts(first: 20) {
@@ -95,10 +97,10 @@ const query = {
       args: { first: 10 },
       select: {
         id: true,
-        name: true
-      }
-    }
-  }
+        name: true,
+      },
+    },
+  },
 };
 
 const { ast } = generateDocument(query);
@@ -112,12 +114,12 @@ import { query, field } from '@graphjson/sdk';
 
 const q = query({
   posts: field()
-    .paginate('relay')  // ← Uses relayPagination preset
+    .paginate('relay') // ← Uses relayPagination preset
     .args({ first: 20 })
     .select({
       id: true,
-      title: true
-    })
+      title: true,
+    }),
 });
 ```
 
@@ -128,6 +130,7 @@ const q = query({
 The `relayPagination()` preset automatically wraps your field selection with the Relay connection structure:
 
 **Original Field:**
+
 ```json
 {
   "posts": {
@@ -140,6 +143,7 @@ The `relayPagination()` preset automatically wraps your field selection with the
 ```
 
 **Transformed:**
+
 ```json
 {
   "posts": {
@@ -168,6 +172,7 @@ The `relayPagination()` preset automatically wraps your field selection with the
 ### When to Use
 
 Use Relay pagination when:
+
 - ✅ Your API follows Relay cursor connections spec
 - ✅ You need cursor-based pagination
 - ✅ You want pageInfo metadata
@@ -191,11 +196,11 @@ const relayAst = applyPlugins(ast, [relayPagination()]);
 
 const result = await client.query({
   query: relayAst,
-  variables: { first: 20 }
+  variables: { first: 20 },
 });
 
 // Access paginated data
-const posts = result.data.posts.edges.map(edge => edge.node);
+const posts = result.data.posts.edges.map((edge) => edge.node);
 const hasMore = result.data.posts.pageInfo.hasNextPage;
 ```
 
@@ -206,26 +211,26 @@ import { useState } from 'react';
 
 function PostsList() {
   const [cursor, setCursor] = useState(null);
-  
+
   const loadMore = async () => {
     const { ast } = generateDocument(postsQuery);
     const relayAst = applyPlugins(ast, [relayPagination()]);
-    
+
     const result = await client.query({
       query: relayAst,
-      variables: { first: 20, after: cursor }
+      variables: { first: 20, after: cursor },
     });
-    
+
     const { edges, pageInfo } = result.data.posts;
-    const newPosts = edges.map(e => e.node);
-    
+    const newPosts = edges.map((e) => e.node);
+
     if (pageInfo.hasNextPage) {
       setCursor(pageInfo.endCursor);
     }
-    
+
     return newPosts;
   };
-  
+
   // ... render logic
 }
 ```
@@ -246,7 +251,7 @@ export function customPreset(): GraphJsonPlugin {
     onField(field, context) {
       // Transform individual fields
       return modifiedField;
-    }
+    },
   };
 }
 ```
@@ -258,7 +263,7 @@ export function addTimestamp(): GraphJsonPlugin {
   return {
     onField(field) {
       if (!field.selectionSet) return field;
-      
+
       return {
         ...field,
         selectionSet: {
@@ -267,23 +272,23 @@ export function addTimestamp(): GraphJsonPlugin {
             ...field.selectionSet.selections,
             {
               kind: Kind.FIELD,
-              name: { kind: Kind.NAME, value: 'timestamp' }
-            }
-          ]
-        }
+              name: { kind: Kind.NAME, value: 'timestamp' },
+            },
+          ],
+        },
       };
-    }
+    },
   };
 }
 ```
 
 ## GraphJSON Ecosystem
 
-| Package | Description | NPM |
-|---------|-------------|-----|
-| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core) | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core) |
-| [@graphjson/plugins](https://www.npmjs.com/package/@graphjson/plugins) | Plugin system types | [![npm](https://img.shields.io/npm/v/@graphjson/plugins)](https://www.npmjs.com/package/@graphjson/plugins) |
-| [@graphjson/sdk](https://www.npmjs.com/package/@graphjson/sdk) | High-level SDK | [![npm](https://img.shields.io/npm/v/@graphjson/sdk)](https://www.npmjs.com/package/@graphjson/sdk) |
+| Package                                                                | Description              | NPM                                                                                                         |
+| ---------------------------------------------------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| [@graphjson/core](https://www.npmjs.com/package/@graphjson/core)       | Core document generation | [![npm](https://img.shields.io/npm/v/@graphjson/core)](https://www.npmjs.com/package/@graphjson/core)       |
+| [@graphjson/plugins](https://www.npmjs.com/package/@graphjson/plugins) | Plugin system types      | [![npm](https://img.shields.io/npm/v/@graphjson/plugins)](https://www.npmjs.com/package/@graphjson/plugins) |
+| [@graphjson/sdk](https://www.npmjs.com/package/@graphjson/sdk)         | High-level SDK           | [![npm](https://img.shields.io/npm/v/@graphjson/sdk)](https://www.npmjs.com/package/@graphjson/sdk)         |
 
 ## Examples
 

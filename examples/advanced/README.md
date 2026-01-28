@@ -26,43 +26,40 @@ import { query, field, variable } from '@graphjson/sdk';
 
 const input = query({
   companies: field()
-    .paginate('relay')           // ← Pagination
+    .paginate('relay') // ← Pagination
     .args({ first: 5 })
     .select({
       id: true,
       name: true,
-      
+
       departments: field()
         .args({ first: 3 })
         .select({
           id: true,
           name: true,
-          
+
           employees: field()
-            .alias('staff')                    // ← Alias
+            .alias('staff') // ← Alias
             .directive('include', { if: true }) // ← Directive
             .args({
               first: 10,
-              after: variable('employeeCursor', 'String')
+              after: variable('employeeCursor', 'String'),
             })
             .select({
               id: true,
               firstName: true,
               lastName: true,
-              
-              projects: field()
-                .directive('skip', { if: false })
-                .args({ active: true })
-                .select({
-                  id: true,
-                  title: true,
-                  status: true
-                }),
-              
-              '...EmployeeFields': true  // ← Fragment spread
-            })
-        })
-    })
+
+              projects: field().directive('skip', { if: false }).args({ active: true }).select({
+                id: true,
+                title: true,
+                status: true,
+              }),
+
+              '...EmployeeFields': true, // ← Fragment spread
+            }),
+        }),
+    }),
 });
 ```
 
@@ -79,7 +76,7 @@ npx nx run advanced:relay-run
 ## Expected Output
 
 ```graphql
-query($employeeCursor: String) {
+query ($employeeCursor: String) {
   companies(first: 5) {
     edges {
       node {
@@ -118,13 +115,18 @@ Type-safe, chainable API:
 
 ```typescript
 field()
-  .args({ /* ... */ })
-  .select({ /* ... */ })
+  .args({
+    /* ... */
+  })
+  .select({
+    /* ... */
+  })
   .alias('newName')
-  .directive('include', { if: true })
+  .directive('include', { if: true });
 ```
 
 Benefits:
+
 - TypeScript autocomplete
 - Compile-time type checking
 - Fluent, readable syntax
@@ -132,7 +134,7 @@ Benefits:
 ### 2. Pagination
 
 ```typescript
-field().paginate('relay')
+field().paginate('relay');
 ```
 
 Automatically wraps the field with Relay pagination structure:
@@ -154,7 +156,7 @@ Automatically wraps the field with Relay pagination structure:
 ### 3. Aliases
 
 ```typescript
-field().alias('staff')
+field().alias('staff');
 ```
 
 Renames the field in the response:
@@ -166,16 +168,17 @@ staff: employees {
 ```
 
 Usage:
+
 ```typescript
 const data = await execute(ast);
-console.log(data.staff);  // Instead of data.employees
+console.log(data.staff); // Instead of data.employees
 ```
 
 ### 4. Directives
 
 ```typescript
-field().directive('include', { if: true })
-field().directive('skip', { if: false })
+field().directive('include', { if: true });
+field().directive('skip', { if: false });
 ```
 
 Generates:
@@ -191,6 +194,7 @@ projects @skip(if: false) {
 ```
 
 Common directives:
+
 - `@include(if: Boolean!)` - Include field conditionally
 - `@skip(if: Boolean!)` - Skip field conditionally
 - `@deprecated(reason: String)` - Mark as deprecated
@@ -218,8 +222,8 @@ Fragments must be defined separately in GraphQL.
 ### 6. Variables
 
 ```typescript
-variable('employeeCursor', 'String')
-variable('limit', 'Int!', 10)  // With default
+variable('employeeCursor', 'String');
+variable('limit', 'Int!', 10); // With default
 ```
 
 Creates GraphQL variables with proper type definitions.
@@ -232,8 +236,8 @@ Creates a query operation.
 
 ```typescript
 query({
-  users: field().select({ id: true })
-})
+  users: field().select({ id: true }),
+});
 ```
 
 ### `field()`
@@ -241,6 +245,7 @@ query({
 Creates a field builder.
 
 **Methods:**
+
 - `.args(obj)` - Add arguments
 - `.select(obj)` - Select subfields
 - `.alias(string)` - Set alias
@@ -252,8 +257,8 @@ Creates a field builder.
 Creates a variable reference.
 
 ```typescript
-variable('userId', 'ID!')           // Required
-variable('limit', 'Int', 10)        // With default
+variable('userId', 'ID!'); // Required
+variable('limit', 'Int', 10); // With default
 ```
 
 ## Practical Use Cases
@@ -264,18 +269,15 @@ variable('limit', 'Int', 10)        // With default
 const includeDetails = true;
 
 query({
-  users: field()
-    .select({
-      id: true,
-      name: true,
-      details: field()
-        .directive('include', { if: includeDetails })
-        .select({
-          bio: true,
-          avatar: true
-        })
-    })
-})
+  users: field().select({
+    id: true,
+    name: true,
+    details: field().directive('include', { if: includeDetails }).select({
+      bio: true,
+      avatar: true,
+    }),
+  }),
+});
 ```
 
 ### Dynamic Pagination
@@ -285,15 +287,15 @@ query({
   posts: field()
     .args({
       first: variable('pageSize', 'Int!', 20),
-      after: variable('cursor', 'String')
+      after: variable('cursor', 'String'),
     })
     .paginate('relay')
     .select({
       id: true,
       title: true,
-      content: true
-    })
-})
+      content: true,
+    }),
+});
 ```
 
 ### Aliasing for Multiple Queries
@@ -304,15 +306,16 @@ query({
     .alias('recentPosts')
     .args({ first: 10, orderBy: 'CREATED_DESC' })
     .select({ id: true, title: true }),
-  
+
   popular: field()
     .alias('popularPosts')
     .args({ first: 10, orderBy: 'VIEWS_DESC' })
-    .select({ id: true, title: true })
-})
+    .select({ id: true, title: true }),
+});
 ```
 
 Result:
+
 ```graphql
 {
   recentPosts: posts(first: 10, orderBy: CREATED_DESC) {
@@ -329,6 +332,7 @@ Result:
 ## Comparison: JSON vs SDK
 
 ### JSON Approach (Basic Examples)
+
 ```json
 {
   "query": {
@@ -344,12 +348,11 @@ Result:
 **Cons:** No type safety, verbose
 
 ### SDK Approach (Advanced Examples)
+
 ```typescript
 query({
-  users: field()
-    .args({ limit: 10 })
-    .select({ id: true })
-})
+  users: field().args({ limit: 10 }).select({ id: true }),
+});
 ```
 
 **Pros:** Type-safe, autocomplete, chainable, less verbose  

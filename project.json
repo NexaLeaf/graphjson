@@ -11,10 +11,7 @@
       }
     },
     "lint": {
-      "inputs": [
-        "{workspaceRoot}/eslint.config.mjs",
-        "{workspaceRoot}/.eslintignore"
-      ]
+      "inputs": ["{workspaceRoot}/eslint.config.mjs", "{workspaceRoot}/.eslintignore"]
     }
   }
 }
