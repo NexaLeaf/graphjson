@@ -42,7 +42,6 @@
     "@graphjson/ast": "0.0.1",
     "@graphjson/core": "0.0.1",
     "@graphjson/json-dsl": "0.0.1",
-    "@graphjson/plugins": "0.0.1",
     "@graphjson/presets": "0.0.1",
     "@graphjson/printer": "0.0.1",
     "@graphjson/schema": "0.0.1",
