@@ -12,9 +12,16 @@ export function applyPlugins(document: DocumentNode, plugins: GraphJsonPlugin[])
     const onField = plugin.onField;
 
     if (onField) {
+      const path: string[] = [];
       doc = visit(doc, {
-        Field(node: FieldNode) {
-          return onField(node, { path: [] }) ?? node;
+        Field: {
+          enter(node: FieldNode) {
+            path.push(node.alias?.value ?? node.name.value);
+            return onField(node, { path: [...path] }) ?? node;
+          },
+          leave() {
+            path.pop();
+          },
         },
       });
     }

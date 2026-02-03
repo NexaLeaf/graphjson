@@ -43,7 +43,7 @@ A powerful GraphQL query builder and execution framework for TypeScript. GraphJS
 ### Installation
 
 ```bash
-npm install @graphjson/core @graphjson/sdk
+pnpm install @graphjson/core @graphjson/sdk
 ```
 
 ### Basic Usage
@@ -115,7 +115,7 @@ graphjson/
 ### Prerequisites
 
 - Node.js 18+
-- npm or pnpm
+- pnpm
 
 ### Setup
 
@@ -125,50 +125,50 @@ git clone https://github.com/NexaLeaf/graphjson.git
 cd graphjson
 
 # Install dependencies
-npm install
+pnpm install
 
 # Build all packages
-npm run build
+pnpm run build
 
 # Run tests
-npm run test
+pnpm run test
 
 # Run linting
-npm run lint
+pnpm run lint
 
 # Format code
-npm run format
+pnpm run format
 ```
 
 ### Available Commands
 
 ```bash
 # Build
-npm run build              # Build all packages
-npm run build:watch       # Build in watch mode
+pnpm run build              # Build all packages
+pnpm run build:watch       # Build in watch mode
 
 # Testing
-npm run test              # Run all tests
-npm run test:watch        # Run tests in watch mode
-npm run test:coverage     # Generate coverage reports
+pnpm run test              # Run all tests
+pnpm run test:watch        # Run tests in watch mode
+pnpm run test:coverage     # Generate coverage reports
 
 # Code Quality
-npm run lint              # Lint all packages
-npm run lint:fix          # Fix linting issues
-npm run format            # Format code with Prettier
-npm run format:check      # Check formatting
+pnpm run lint              # Lint all packages
+pnpm run lint:fix          # Fix linting issues
+pnpm run format            # Format code with Prettier
+pnpm run format:check      # Check formatting
 
 # Development
-npm run dev               # Start development mode
-npm run graph             # Visualize project graph
+pnpm run dev               # Start development mode
+pnpm run graph             # Visualize project graph
 
 # Documentation
-npm run docs:build        # Build documentation site
-npm run docs:serve        # Serve documentation locally
+pnpm run docs:build        # Build documentation site
+pnpm run docs:serve        # Serve documentation locally
 
 # Publishing
-npm run release           # Create a new release (dry-run)
-npm run release:publish   # Publish packages to npm
+pnpm run release           # Create a new release (dry-run)
+pnpm run release:publish   # Publish packages to npm
 ```
 
 ### Nx Commands
@@ -177,19 +177,19 @@ This project uses Nx for task orchestration. Common Nx commands:
 
 ```bash
 # View project graph
-npx nx graph
+pnpm exec nx graph
 
 # Build specific package
-npx nx build core
+pnpm exec nx build core
 
 # Run tests for affected packages
-npx nx affected -t test
+pnpm exec nx affected -t test
 
 # Run multiple tasks in parallel
-npx nx run-many -t build test lint --parallel=4
+pnpm exec nx run-many -t build test lint --parallel=4
 
 # View project details
-npx nx show project core --web
+pnpm exec nx show project core --web
 ```
 
 ## 🏷️ Module Boundaries
@@ -265,16 +265,16 @@ See the [examples](./examples/) directory for more detailed examples.
 
 ```bash
 # Run all tests
-npm run test
+pnpm run test
 
 # Run tests for specific package
-npx nx test core
+pnpm exec nx test core
 
 # Run tests in watch mode
-npm run test:watch
+pnpm run test:watch
 
 # Generate coverage report
-npm run test:coverage
+pnpm run test:coverage
 ```
 
 ## 📝 Contributing
@@ -290,9 +290,9 @@ We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md)
 
 ### Code Standards
 
-- All code must pass linting: `npm run lint`
-- All code must be formatted: `npm run format`
-- All tests must pass: `npm run test`
+- All code must pass linting: `pnpm run lint`
+- All code must be formatted: `pnpm run format`
+- All tests must pass: `pnpm run test`
 - TypeScript strict mode is enforced
 - Module boundaries must be respected
 
@@ -302,13 +302,13 @@ This project uses Nx Release for version management and publishing:
 
 ```bash
 # Preview what will be released
-npm run release -- --dry-run
+pnpm run release -- --dry-run
 
 # Create a new release
-npm run release
+pnpm run release
 
 # Publish to npm
-npm run release:publish
+pnpm run release:publish
 ```
 
 See [PUBLISHING.md](./PUBLISHING.md) for detailed release instructions.

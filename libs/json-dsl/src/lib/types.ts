@@ -36,6 +36,11 @@ export interface JsonOperation {
 }
 
 export interface JsonDocument {
+  operationName?: {
+    query?: string;
+    mutation?: string;
+    subscription?: string;
+  };
   query?: JsonOperation;
   mutation?: JsonOperation;
   subscription?: JsonOperation;

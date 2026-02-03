@@ -119,20 +119,23 @@ export function field() {
  * Operation Builders
  * ------------------------------ */
 
-export function query(fields: Record<string, FieldBuilder>): JsonDocument {
+export function query(fields: Record<string, FieldBuilder>, name?: string): JsonDocument {
   return {
+    operationName: name ? { query: name } : undefined,
     query: Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, v.build()])),
   };
 }
 
-export function mutation(fields: Record<string, FieldBuilder>): JsonDocument {
+export function mutation(fields: Record<string, FieldBuilder>, name?: string): JsonDocument {
   return {
+    operationName: name ? { mutation: name } : undefined,
     mutation: Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, v.build()])),
   };
 }
 
-export function subscription(fields: Record<string, FieldBuilder>): JsonDocument {
+export function subscription(fields: Record<string, FieldBuilder>, name?: string): JsonDocument {
   return {
+    operationName: name ? { subscription: name } : undefined,
     subscription: Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, v.build()])),
   };
 }

@@ -53,7 +53,7 @@ export default [
             },
             {
               sourceTag: 'scope:printer',
-              onlyDependOnLibsWithTags: ['scope:ast'],
+              onlyDependOnLibsWithTags: ['scope:ast', 'scope:json-dsl', 'scope:core']
             },
             {
               sourceTag: 'scope:presets',

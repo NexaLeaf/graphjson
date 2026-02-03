@@ -3,9 +3,9 @@ import {
   Kind,
   OperationDefinitionNode,
   VariableDefinitionNode,
-  TypeNode,
   FieldNode,
   OperationTypeNode,
+  parseType,
 } from 'graphql';
 import { JsonDocument, JsonVariable } from '@graphjson/json-dsl';
 import { buildFieldNode } from '@graphjson/ast';
@@ -17,52 +17,39 @@ interface GenerateResult {
   relayFields: Set<FieldNode>;
 }
 
-function parseType(type: string): TypeNode {
-  if (type.endsWith('!')) {
-    return {
-      kind: Kind.NON_NULL_TYPE,
-      type: {
-        kind: Kind.NAMED_TYPE,
-        name: { kind: Kind.NAME, value: type.slice(0, -1) },
-      },
-    };
-  }
-
-  return {
-    kind: Kind.NAMED_TYPE,
-    name: { kind: Kind.NAME, value: type },
-  };
-}
 export function generateDocument(
   json: JsonDocument,
   options?: { applyRelay?: boolean }
 ): GenerateResult {
   const variables: Record<string, any> = {};
-  const variableDefinitions: Map<string, VariableDefinitionNode> = new Map();
   const relayFields = new Set<FieldNode>();
-
-  function collectVar(v: JsonVariable) {
-    if (variableDefinitions.has(v.$var)) return;
-
-    variables[v.$var] = v.default ?? null;
-
-    variableDefinitions.set(v.$var, {
-      kind: Kind.VARIABLE_DEFINITION,
-      variable: {
-        kind: Kind.VARIABLE,
-        name: { kind: Kind.NAME, value: v.$var },
-      },
-      type: parseType(v.type),
-    });
-  }
 
   function buildOperation(
     type: 'query' | 'mutation' | 'subscription',
-    fields: Record<string, any>
+    fields: Record<string, any>,
+    name?: string
   ): OperationDefinitionNode {
+    const variableDefinitions: Map<string, VariableDefinitionNode> = new Map();
+
+    function collectVar(v: JsonVariable) {
+      if (variableDefinitions.has(v.$var)) return;
+
+      variables[v.$var] = v.default ?? null;
+
+      variableDefinitions.set(v.$var, {
+        kind: Kind.VARIABLE_DEFINITION,
+        variable: {
+          kind: Kind.VARIABLE,
+          name: { kind: Kind.NAME, value: v.$var },
+        },
+        type: parseType(v.type),
+      });
+    }
+
     return {
       kind: Kind.OPERATION_DEFINITION,
       operation: type as OperationTypeNode,
+      name: name ? { kind: Kind.NAME, value: name } : undefined,
       variableDefinitions: Array.from(variableDefinitions.values()),
       selectionSet: {
         kind: Kind.SELECTION_SET,
@@ -74,10 +61,17 @@ export function generateDocument(
   }
 
   const definitions: OperationDefinitionNode[] = [];
+  const operationNames = json.operationName ?? {};
 
-  if (json.query) definitions.push(buildOperation('query', json.query));
-  if (json.mutation) definitions.push(buildOperation('mutation', json.mutation));
-  if (json.subscription) definitions.push(buildOperation('subscription', json.subscription));
+  if (json.query) {
+    definitions.push(buildOperation('query', json.query, operationNames.query));
+  }
+  if (json.mutation) {
+    definitions.push(buildOperation('mutation', json.mutation, operationNames.mutation));
+  }
+  if (json.subscription) {
+    definitions.push(buildOperation('subscription', json.subscription, operationNames.subscription));
+  }
 
   const result: GenerateResult = {
     ast: {

@@ -10,7 +10,7 @@
       "fallbackCurrentVersionResolver": "disk"
     }
   },
-  "tags": ["scope:core"],
+  "tags": ["scope:core", "scope:json-dsl"],
   "targets": {
     "nx-release-publish": {
       "options": {
