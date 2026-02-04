@@ -23,9 +23,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      # 1️⃣ Setup Node first (NO cache yet)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 2️⃣ Install pnpm and add it to PATH
       - uses: pnpm/action-setup@v2
         with:
           version: 10
+          run_install: false
+
+      # 3️⃣ Enable pnpm cache AFTER pnpm exists
       - uses: actions/setup-node@v4
         with:
           node-version: 20
