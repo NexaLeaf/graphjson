@@ -1,0 +1,14 @@
+:root {
+  --ifm-color-primary: #0f766e;
+  --ifm-color-primary-dark: #0b5f58;
+  --ifm-color-primary-darker: #0a544e;
+  --ifm-color-primary-darkest: #083f3b;
+  --ifm-color-primary-light: #1a8a80;
+  --ifm-color-primary-lighter: #239488;
+  --ifm-color-primary-lightest: #33a79a;
+  --ifm-code-font-size: 95%;
+}
+
+main {
+  background: linear-gradient(180deg, rgba(15, 118, 110, 0.08), rgba(15, 118, 110, 0));
+}

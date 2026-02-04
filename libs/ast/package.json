@@ -8,6 +8,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@graphjson/json-dsl": "0.0.1"
+    "@graphjson/json-dsl": "0.0.1",
+    "graphql": "^16.12.0"
   }
 }

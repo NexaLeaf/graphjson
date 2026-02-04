@@ -7,5 +7,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {}
+  "dependencies": {
+    "graphql": "^16.12.0"
+  }
 }

@@ -277,6 +277,51 @@ pnpm run test:watch
 pnpm run test:coverage
 ```
 
+
+
+## 📄 Documentation Site (Vercel)
+
+This repo includes a Docusaurus site under .
+
+### Build
+
+
+
+### Local Dev
+
+
+
+### Vercel Setup
+
+Set the following secrets in GitHub for preview deployments:
+
+- 
+- 
+- 
+
+Then open a PR to get an automatic preview deployment.
+
+
+## 📄 Documentation Site (GitHub Pages)
+
+This repo includes a Docusaurus site under `apps/docs`.
+
+### Build
+
+```bash
+pnpm exec nx build docs
+```
+
+### Local Dev
+
+```bash
+pnpm exec nx serve docs
+```
+
+### GitHub Pages Setup
+
+Docs are deployed automatically on pushes to `main` that touch `apps/docs` or build files.
+
 ## 📝 Contributing
 
 We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
